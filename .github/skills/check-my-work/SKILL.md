@@ -19,7 +19,7 @@ Follow these steps in order:
 2. **Read the acceptance criteria.**
    Determine which section folder corresponds to the current subsection number.
    Read that section's `README.md`.
-   Extract the `Acceptance Criteria` block for the current subsection (the `### sX.Y` heading).
+   Find the `### X.Y — Title` subsection heading for the current subsection, then locate the `#### Acceptance Criteria` block nested inside it. Use those checklist items as the criteria to evaluate.
 
 3. **Get the diff.**
    Run `git diff sX.Y-start..HEAD` to see all changes made since the subsection started.
@@ -42,11 +42,11 @@ Follow these steps in order:
      - If YES: tell the user to run the `start-section` skill before beginning the next subsection. Do NOT set the next start tag yet — `start-section` does that.
      - If NO: run `git tag s[next]-start` and tell the user they can begin.
    - Update `tutorial/SYLLABUS.md`: change the completed subsection's status to `done` and the next subsection's status to `in-progress`.
-    - Auto-commit if tutorial metadata/content changed:
-       - If `tutorial/SYLLABUS.md` and/or the current section `README.md` changed, stage only those changed files and commit them.
-       - Commit message format: `progressed subsection sX.Y to done (next: sA.B in-progress)`
-          Example: `progressed subsection s1.1 to done (next: s1.2 in-progress)`
-       - If neither file changed, skip committing.
+   - Auto-commit if tutorial metadata/content changed:
+     - If `tutorial/SYLLABUS.md` and/or the current section `README.md` changed, stage only those changed files and commit them.
+     - Commit message format: `progressed subsection sX.Y to done (next: sA.B in-progress)`
+       Example: `progressed subsection s1.1 to done (next: s1.2 in-progress)`
+     - If neither file changed, skip committing.
 
    **If the user declines:**
    Do nothing. Confirm that no tags or files were changed.

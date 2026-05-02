@@ -31,8 +31,8 @@ Follow these steps in order:
    If this command changed `tutorial/SYLLABUS.md` and/or the target section `README.md`, stage only those changed files and commit them.
    Use a message in this format:
    - `generated subsection sX.1 content`
-   Example: `generated subsection s1.1 content`
-   If there are no changes in those files, skip committing.
+     Example: `generated subsection s1.1 content`
+     If there are no changes in those files, skip committing.
 
    Tell the learner the tag has been set and they can begin subsection X.1.
 
@@ -46,54 +46,30 @@ Each section README must contain:
 
 One paragraph: what this section covers, why it matters for the app being built, and what the learner will be able to do by the end.
 
-## Background
+Then, for each subsection (X.1, X.2, X.3 etc.), write a self-contained block in this order:
 
-Conceptual explanation of the key ideas. Use comparisons to C# or Python where helpful. Include concrete code examples. Do NOT use "we will learn" — explain things directly as facts.
+---
 
-For each subsection (X.1, X.2, X.3 etc.), write its background content under a `### X.Y — Title` heading.
+### X.Y — Title
 
-## Exercises
+Conceptual explanation of the key ideas for this subsection. Use comparisons to C# or Python where helpful. Include concrete code examples. Do NOT use "we will learn" — explain things directly as facts. Do not reveal answers to the exercise below.
 
-For each subsection, one or more hands-on exercises. Each exercise:
-- States clearly what file to create or modify
-- Gives enough constraints to be unambiguous without giving the answer
-- Includes a "Why" sentence explaining what concept the exercise targets
-
-Format:
-
-```
-### Exercise X.Y.A — Short title
+#### Exercise X.Y.A — Short title
 
 **File:** `src/path/to/file.ts`
 
 **Task:** [What to do, in 2-4 sentences. Specific enough that there is one clear right answer, but not so specific that it gives the solution.]
 
 **Why:** [One sentence: what TypeScript/React concept this exercise targets.]
-```
 
-## Acceptance Criteria
-
-A structured checklist the `check-my-work` skill uses to evaluate the diff. Be precise and machine-readable.
-
-Format:
-
-```
-### s[section].[subsection] — [Title]
+#### Acceptance Criteria
 
 - [ ] [Specific, observable thing that must be true in the code]
 - [ ] [Another specific thing]
-```
 
-Example:
-```
-### s1.1 — DevContainer
+---
 
-- [ ] A `.devcontainer/devcontainer.json` file exists
-- [ ] The devcontainer specifies a Node.js version >= 20
-- [ ] The `dbaeumer.vscode-eslint` extension is listed in `customizations.vscode.extensions`
-```
-
-Criteria must be verifiable by reading the diff — no "understand" or "know" criteria.
+Repeat the above block for each subsection. Criteria must be verifiable by reading the diff — no "understand" or "know" criteria.
 
 </section-content-format>
 
