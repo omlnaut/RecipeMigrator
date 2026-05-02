@@ -7,6 +7,7 @@ Senior backend/ML developer (Python, C#). Familiar with typed languages and Git.
 ## App Goal
 
 A local browser tool that:
+
 1. Loads a MyCookBook XML export and its images
 2. Displays recipes with images, selectable
 3. Converts selected recipes to Mealie JSON format (via Gemini) and validates the output with Zod

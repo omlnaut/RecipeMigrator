@@ -1,73 +1,73 @@
-# RecipeMigrator
+# React + TypeScript + Vite
 
-A learn-by-doing project. You are building a local browser tool that converts recipes from a MyCookBook XML export into Mealie JSON format — while learning TypeScript and React from scratch.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-See [CONTEXT.md](CONTEXT.md) for domain terminology and [tutorial/SYLLABUS.md](tutorial/SYLLABUS.md) for the full course outline.
+Currently, two official plugins are available:
 
----
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## How to use this repo
+## React Compiler
 
-### Starting a new section
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-In Copilot Chat (agent mode), ask to run the start-section skill:
+## Expanding the ESLint configuration
 
-```text
-Use the start-section skill to generate the next section.
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
+
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
 
-This generates the full learning material for the next section (background, exercises, acceptance criteria) and sets the git start tag automatically.
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-### Working through exercises
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-Read the generated section README in `tutorial/NN-section-name/README.md`. Each subsection has:
-- **Background** — concepts explained, with C#/Python comparisons
-- **Exercises** — specific tasks to implement yourself
-- **Acceptance Criteria** — the checklist `check-my-work` evaluates against
-
-Make your changes in the repo, commit as you go. The diff since the start tag is what gets evaluated.
-
-### Checking your work
-
-When you think you've finished a subsection, ask Copilot to run check-my-work:
-
-```text
-Run the check-my-work skill for my current subsection.
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
-
-This diffs your changes against the subsection's acceptance criteria and reports ✅ / ❌ per item. If everything passes, it will ask you to confirm before setting the `done` tag and advancing to the next subsection.
-
-### Getting help
-
-Use the tutor agent when you're stuck on a concept or exercise:
-
-```
-@tutor why does TypeScript allow this assignment even though the types look different?
-```
-
-The tutor reads your current position from git tags before answering. It will give hints, not solutions.
-
----
-
-## Skill reference
-
-| Skill           | When to use                               |
-| --------------- | ----------------------------------------- |
-| `start-section` | Before beginning a new section            |
-| `check-my-work` | After completing a subsection's exercises |
-| `@tutor`        | When stuck on a concept or exercise       |
-
----
-
-## Progress tags
-
-Tags follow the pattern `sX.Y-start` / `sX.Y-done` where X is the section number and Y is the subsection number.
-
-```
-s1.1-start   ← baseline for subsection 1.1
-s1.1-done    ← subsection 1.1 complete
-s1.2-start   ← baseline for subsection 1.2
-...
-```
-
-`start-section` sets the first start tag of a section. `check-my-work` sets the remaining tags after confirmation.
