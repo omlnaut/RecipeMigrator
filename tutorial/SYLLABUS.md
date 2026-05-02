@@ -37,13 +37,13 @@ A local browser tool that:
 | --- | ---------------------------------------------------- | --------- | ----------- |
 | 1.1 | DevContainer: VS Code, Node.js, extensions           | 30 min    | done        |
 | 1.2 | Scaffolding the app with Vite + React + TypeScript   | 30 min    | done        |
-| 1.3 | Project structure tour: what every file does and why | 30 min    | in-progress |
+| 1.3 | Project structure tour: what every file does and why | 30 min    | done        |
 
 ### Section 2 — TypeScript for C#/Python Developers
 
 | ID  | Title                                                           | Est. Time | Status      |
 | --- | --------------------------------------------------------------- | --------- | ----------- |
-| 2.1 | Structural vs. nominal typing: what you need to unlearn from C# | 45 min    | not-started |
+| 2.1 | Structural vs. nominal typing: what you need to unlearn from C# | 45 min    | in-progress |
 | 2.2 | `type` vs `interface`, union types, `unknown` vs `any`          | 45 min    | not-started |
 | 2.3 | Generics and utility types (`Partial`, `Pick`, `Record`)        | 45 min    | not-started |
 
