@@ -34,7 +34,7 @@ A local browser tool that:
 
 | ID  | Title                                                | Est. Time | Status      |
 | --- | ---------------------------------------------------- | --------- | ----------- |
-| 1.1 | DevContainer: VS Code, Node.js, extensions           | 30 min    | not-started |
+| 1.1 | DevContainer: VS Code, Node.js, extensions           | 30 min    | in-progress |
 | 1.2 | Scaffolding the app with Vite + React + TypeScript   | 30 min    | not-started |
 | 1.3 | Project structure tour: what every file does and why | 30 min    | not-started |
 
