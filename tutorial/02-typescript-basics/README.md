@@ -1,6 +1,6 @@
 # Section 2 — TypeScript for C#/Python Developers
 
-> Content not yet generated. Run the `generate-section` skill to create the full learning material, exercises, and acceptance criteria for this section.
+> Content not yet generated. Run the `start-section` skill to create the full learning material, exercises, and acceptance criteria for this section.
 
 ## Subsections
 

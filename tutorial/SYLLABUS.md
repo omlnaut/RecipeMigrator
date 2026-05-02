@@ -24,7 +24,7 @@ A local browser tool that:
 
 - Git tags mark subsection boundaries: `s1.1-start`, `s1.1-done`, `s1.2-start`, etc.
 - The `check-my-work` skill infers current position from tags and evaluates the diff.
-- The `generate-section` skill generates content for the next section on demand.
+- The `start-section` skill generates content for the next section on demand and sets the first subsection start tag.
 
 ---
 

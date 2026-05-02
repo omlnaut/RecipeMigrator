@@ -10,10 +10,10 @@ See [CONTEXT.md](CONTEXT.md) for domain terminology and [tutorial/SYLLABUS.md](t
 
 ### Starting a new section
 
-Run the `start-section` skill in Copilot Chat:
+In Copilot Chat (agent mode), ask to run the start-section skill:
 
-```
-#start-section
+```text
+Use the start-section skill to generate the next section.
 ```
 
 This generates the full learning material for the next section (background, exercises, acceptance criteria) and sets the git start tag automatically.
@@ -29,10 +29,10 @@ Make your changes in the repo, commit as you go. The diff since the start tag is
 
 ### Checking your work
 
-When you think you've finished a subsection, run:
+When you think you've finished a subsection, ask Copilot to run check-my-work:
 
-```
-#check-my-work
+```text
+Run the check-my-work skill for my current subsection.
 ```
 
 This diffs your changes against the subsection's acceptance criteria and reports ✅ / ❌ per item. If everything passes, it will ask you to confirm before setting the `done` tag and advancing to the next subsection.
@@ -51,11 +51,11 @@ The tutor reads your current position from git tags before answering. It will gi
 
 ## Skill reference
 
-| Skill            | When to use                               |
-| ---------------- | ----------------------------------------- |
-| `#start-section` | Before beginning a new section            |
-| `#check-my-work` | After completing a subsection's exercises |
-| `@tutor`         | When stuck on a concept or exercise       |
+| Skill           | When to use                               |
+| --------------- | ----------------------------------------- |
+| `start-section` | Before beginning a new section            |
+| `check-my-work` | After completing a subsection's exercises |
+| `@tutor`        | When stuck on a concept or exercise       |
 
 ---
 

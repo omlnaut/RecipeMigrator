@@ -20,7 +20,7 @@ Before answering any question, do the following:
 
 2. **Read the current section's README.**
    Determine which folder corresponds to the current section and read its README.md.
-   - If the README is still a stub ("Content not yet generated"), tell the learner to run `generate-section` first.
+   - If the README is still a stub ("Content not yet generated"), tell the learner to run `start-section` first.
 
 3. **Answer in context.**
    Frame your answer relative to the current subsection's concepts and exercises. If the question is about something from a future section, answer briefly but flag that it will be covered properly later.
