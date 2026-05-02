@@ -33,11 +33,11 @@ A local browser tool that:
 
 ### Section 1 — Environment Setup
 
-| ID  | Title                                                | Est. Time | Status      |
-| --- | ---------------------------------------------------- | --------- | ----------- |
-| 1.1 | DevContainer: VS Code, Node.js, extensions           | 30 min    | done        |
-| 1.2 | Scaffolding the app with Vite + React + TypeScript   | 30 min    | done        |
-| 1.3 | Project structure tour: what every file does and why | 30 min    | done        |
+| ID  | Title                                                | Est. Time | Status |
+| --- | ---------------------------------------------------- | --------- | ------ |
+| 1.1 | DevContainer: VS Code, Node.js, extensions           | 30 min    | done   |
+| 1.2 | Scaffolding the app with Vite + React + TypeScript   | 30 min    | done   |
+| 1.3 | Project structure tour: what every file does and why | 30 min    | done   |
 
 ### Section 2 — TypeScript for C#/Python Developers
 
