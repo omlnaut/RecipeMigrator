@@ -26,6 +26,14 @@ Follow these steps in order:
 6. **Set the start tag for the first subsection.**
    Run `git tag sX.1-start` (where X is the section number). This marks the baseline for `check-my-work` to diff against.
    Update `tutorial/SYLLABUS.md`: set the first subsection's status to `in-progress`.
+
+7. **Auto-commit tutorial metadata/content updates.**
+   If this command changed `tutorial/SYLLABUS.md` and/or the target section `README.md`, stage only those changed files and commit them.
+   Use a message in this format:
+   - `generated subsection sX.1 content`
+   Example: `generated subsection s1.1 content`
+   If there are no changes in those files, skip committing.
+
    Tell the learner the tag has been set and they can begin subsection X.1.
 
 </what-to-do>
@@ -95,5 +103,6 @@ Criteria must be verifiable by reading the diff — no "understand" or "know" cr
 - Do not introduce tools or libraries not listed in the syllabus tech stack without flagging it.
 - Keep the tone direct and technical. No hand-holding. No "Great job!" padding.
 - The start tag is set automatically in step 6. Do not tell the user to do it manually.
+- The commit in step 7 is automatic when `tutorial/SYLLABUS.md` or the section `README.md` changed. Do not ask the user to commit manually.
 
 </constraints>

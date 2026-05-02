@@ -42,6 +42,11 @@ Follow these steps in order:
      - If YES: tell the user to run the `start-section` skill before beginning the next subsection. Do NOT set the next start tag yet — `start-section` does that.
      - If NO: run `git tag s[next]-start` and tell the user they can begin.
    - Update `tutorial/SYLLABUS.md`: change the completed subsection's status to `done` and the next subsection's status to `in-progress`.
+    - Auto-commit if tutorial metadata/content changed:
+       - If `tutorial/SYLLABUS.md` and/or the current section `README.md` changed, stage only those changed files and commit them.
+       - Commit message format: `progressed subsection sX.Y to done (next: sA.B in-progress)`
+          Example: `progressed subsection s1.1 to done (next: s1.2 in-progress)`
+       - If neither file changed, skip committing.
 
    **If the user declines:**
    Do nothing. Confirm that no tags or files were changed.
@@ -56,5 +61,6 @@ Follow these steps in order:
 - Never guess at intent. Evaluate only what is in the diff.
 - Do not modify any source files — only git tags and SYLLABUS.md.
 - If the section README has not been generated yet (contains stub line), tell the user and stop.
+- When `tutorial/SYLLABUS.md` or the section `README.md` is modified during this command, commit automatically using the step 6 message format.
 
 </constraints>
