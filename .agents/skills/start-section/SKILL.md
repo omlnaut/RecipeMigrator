@@ -1,11 +1,11 @@
 ---
-name: generate-section
-description: Generates full learning content for the next tutorial section. Reads the syllabus, all previously generated sections, and future stubs for consistency. Produces learning material, exercises, and structured acceptance criteria. Use when starting a new section.
+name: start-section
+description: Generates full learning content for the next tutorial section and sets the first subsection's start tag. Reads the syllabus, all previously generated sections, and future stubs for consistency. Produces learning material, exercises, and structured acceptance criteria. Use when starting a new section.
 ---
 
 <what-to-do>
 
-Generate the full content for the next tutorial section that has not yet been filled in.
+Generate the full content for the next tutorial section and set it up for the learner to begin.
 
 Follow these steps in order:
 
@@ -22,6 +22,11 @@ Follow these steps in order:
    Tailor the content: senior backend/ML developer (Python, C#), no meaningful JavaScript experience, strong typing instincts. Move fast through syntax basics, spend real time on concepts that differ from C# or Python. No aesthetic focus.
 
 5. **Generate the section content** and write it to the target section's README.md, replacing the stub entirely.
+
+6. **Set the start tag for the first subsection.**
+   Run `git tag sX.1-start` (where X is the section number). This marks the baseline for `check-my-work` to diff against.
+   Update `tutorial/SYLLABUS.md`: set the first subsection's status to `in-progress`.
+   Tell the learner the tag has been set and they can begin subsection X.1.
 
 </what-to-do>
 
@@ -89,6 +94,6 @@ Criteria must be verifiable by reading the diff — no "understand" or "know" cr
 - Do not reveal answers to exercises in the Background section.
 - Do not introduce tools or libraries not listed in the syllabus tech stack without flagging it.
 - Keep the tone direct and technical. No hand-holding. No "Great job!" padding.
-- After writing the file, remind the user to set the first subsection's start tag: `git tag s[X].[1]-start`
+- The start tag is set automatically in step 6. Do not tell the user to do it manually.
 
 </constraints>

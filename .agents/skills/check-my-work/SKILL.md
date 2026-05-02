@@ -1,6 +1,6 @@
 ---
 name: check-my-work
-description: Evaluates the learner's code changes against the current subsection's acceptance criteria. Infers current position from git tags. If all criteria pass, tags the subsection as done and sets the next start tag. Use after completing a subsection's exercises.
+description: Evaluates the learner's code changes against the current subsection's acceptance criteria. Infers current position from git tags. If all criteria pass, asks the user whether to mark the subsection as done. Use after completing a subsection's exercises.
 ---
 
 <what-to-do>
@@ -33,12 +33,18 @@ Follow these steps in order:
    Show the full checklist with each item marked ✅ or ❌, plus a brief explanation for any ❌.
 
 6. **If all criteria pass:**
+   Ask the user: "All checks passed ✅. Mark subsection sX.Y as done and advance to the next one? (yes / no)"
+
+   **If the user confirms:**
    - Run `git tag sX.Y-done`
    - Determine the next subsection. If sX.Y is the last subsection in its section (e.g. s1.3 and section 1 has 3 subsections), the next is s(X+1).1. Otherwise it is sX.(Y+1).
    - Check whether the next section's README still contains the stub line "Content not yet generated".
-     - If YES: tell the user to run the `generate-section` skill before starting.
+     - If YES: tell the user to run the `start-section` skill before beginning the next subsection. Do NOT set the next start tag yet — `start-section` does that.
      - If NO: run `git tag s[next]-start` and tell the user they can begin.
-   - Update `tutorial/SYLLABUS.md`: change the completed subsection's status from `not-started` to `done` and the next subsection's status to `in-progress`.
+   - Update `tutorial/SYLLABUS.md`: change the completed subsection's status to `done` and the next subsection's status to `in-progress`.
+
+   **If the user declines:**
+   Do nothing. Confirm that no tags or files were changed.
 
 7. **If any criterion fails:**
    Do not tag anything. Tell the user specifically what is missing and which file to look at.
