@@ -4,8 +4,14 @@ function App() {
   return (
     <div>
       <h1>Recipe Migrator</h1>
-      {RecipeRow({ id: "1", name: "first" }, true)}
-      {RecipeRow({ id: "2", name: "third" }, false)}
+      <RecipeRow
+        recipe={{ id: "1", name: "first" }}
+        selected={true}
+      ></RecipeRow>
+      <RecipeRow
+        recipe={{ id: "2", name: "second" }}
+        selected={false}
+      ></RecipeRow>
     </div>
   );
 }
