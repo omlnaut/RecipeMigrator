@@ -4,6 +4,8 @@
         "git -C c:\\gitsource\\RecipeMigrator": true,
         "git add": true,
         "git commit": true,
-        "test": true
-    }
+        "test": true,
+        "npx tsc": true
+    },
+    "markdown.preview.fontSize": 13
 }
