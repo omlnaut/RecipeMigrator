@@ -44,13 +44,13 @@ A local browser tool that:
 | --- | --------------------------------------------------------------- | --------- | ----------- |
 | 2.1 | Structural vs. nominal typing: what you need to unlearn from C# | 45 min    | done        |
 | 2.2 | `type` vs `interface`, union types, `unknown` vs `any`          | 45 min    | done        |
-| 2.3 | Generics and utility types (`Partial`, `Pick`, `Record`)        | 45 min    | in-progress |
+| 2.3 | Generics and utility types (`Partial`, `Pick`, `Record`)        | 45 min    | done        |
 
 ### Section 3 — React Fundamentals
 
 | ID  | Title                                                    | Est. Time | Status      |
 | --- | -------------------------------------------------------- | --------- | ----------- |
-| 3.1 | Components, JSX, and typed props                         | 45 min    | not-started |
+| 3.1 | Components, JSX, and typed props                         | 45 min    | in-progress |
 | 3.2 | `useState<T>` and event handling                         | 45 min    | not-started |
 | 3.3 | `useEffect` and loading data (parses the MyCookBook XML) | 60 min    | not-started |
 
