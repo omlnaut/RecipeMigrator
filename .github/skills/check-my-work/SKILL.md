@@ -1,12 +1,11 @@
 ---
 name: check-my-work
-description: Evaluates the learner's code changes against the current subsection's acceptance criteria, then advances progress. When crossing into a new section, it sets the next start tag and generates section content if still stubbed.
+description: Evaluates the learner's code changes against the current subsection's acceptance criteria. Infers current position from git tags. Advances progress, and generates new section content when crossing into a stub section. This is the single entry point for all tutorial progression.
 ---
 
 <what-to-do>
 
-Evaluate whether the learner has completed the current subsection's exercises, then advance to the next subsection when approved.
-This skill is the single entry point for progression, including section-content generation when needed.
+Evaluate whether the learner has completed the current subsection's exercises, then advance progress. This skill handles everything: evaluation, tagging, and section-content generation.
 
 Follow these steps in order:
 
@@ -40,21 +39,17 @@ Follow these steps in order:
    - Run `git tag sX.Y-done`
    - Determine the next subsection. If sX.Y is the last subsection in its section (e.g. s1.3 and section 1 has 3 subsections), the next is s(X+1).1. Otherwise it is sX.(Y+1).
    - If the next subsection is in the same section: run `git tag s[next]-start`.
-   - If the next subsection is `s(X+1).1` (entering a new, larger section):
-     - Check whether that section README contains the stub line "Content not yet generated".
-     - If the README is already generated: run `git tag s[next]-start`.
-     - If the README is still a stub: generate content for that new section before setting the start tag.
-       - Read all already-generated section READMEs (non-stubs) and extract terminology/patterns already introduced.
-       - Read all future stub READMEs and avoid front-loading concepts planned for later sections.
-       - Read learner profile from `tutorial/SYLLABUS.md` and tailor the section depth/speed to it.
-       - Replace the target section README stub with full section content, following the old `start-section` format requirements.
-       - Then run `git tag s[next]-start`.
+   - If the next subsection is `s(X+1).1` (entering a new section):
+     - Read the target section's README.
+     - If it still contains the stub line "Content not yet generated": generate the full section content now (see `<section-content-format>` below), write it to that README, then validate the shape (see `<constraints>`), then run `git tag s[next]-start`.
+     - If it is already generated: run `git tag s[next]-start`.
    - Update `tutorial/SYLLABUS.md`: change the completed subsection's status to `done` and the next subsection's status to `in-progress`.
    - Auto-commit if tutorial metadata/content changed:
-     - If `tutorial/SYLLABUS.md` and/or any touched section `README.md` changed (current and/or newly generated next section), stage only those changed files and commit them.
+     - Stage `tutorial/SYLLABUS.md` and any section README that was modified or generated, then commit.
      - Commit message format: `progressed subsection sX.Y to done (next: sA.B in-progress)`
        Example: `progressed subsection s1.1 to done (next: s1.2 in-progress)`
-     - If neither file changed, skip committing.
+     - If no tracked files changed, skip committing.
+   - Tell the user they can begin the next subsection.
 
    **If the user declines:**
    Do nothing. Confirm that no tags or files were changed.
@@ -64,12 +59,60 @@ Follow these steps in order:
 
 </what-to-do>
 
+<section-content-format>
+
+When generating a new section README, replace the stub entirely with content matching this structure:
+
+## Overview
+
+One paragraph: what this section covers, why it matters for the app being built, and what the learner will be able to do by the end.
+
+Then, for each subsection (X.1, X.2, X.3 etc.), write a self-contained block in this order:
+
+---
+
+### X.Y — Title
+
+Conceptual explanation of the key ideas for this subsection. Use comparisons to C# or Python where helpful. Include concrete code examples. Do NOT use "we will learn" — explain things directly as facts. Do not reveal answers to the exercise below.
+
+#### Exercise X.Y.A — Short title
+
+**File:** `src/path/to/file.ts`
+
+**Task:** [What to do, in 2-4 sentences. Specific enough that there is one clear right answer, but not so specific that it gives the solution.]
+
+**Why:** [One sentence: what TypeScript/React concept this exercise targets.]
+
+#### Acceptance Criteria
+
+- [ ] [Specific, observable thing that must be true in the code]
+- [ ] [Another specific thing]
+
+---
+
+Repeat the above block for each subsection. Criteria must be verifiable by reading the diff — no "understand" or "know" criteria.
+Do not collect all explanations under a top-level section or collect all exercises/criteria into separate top-level sections. The subsection block is the unit of organisation.
+
+Context rules when generating:
+
+- Read all already-generated section READMEs (non-stubs). Do not re-introduce terminology or concepts already covered.
+- Read all future stub READMEs. Do not front-load content planned for later sections.
+- Tailor depth and speed to the learner profile in `tutorial/SYLLABUS.md`: senior backend/ML developer (Python, C#), no meaningful JavaScript experience, strong typing instincts. Move fast through syntax basics, spend real time on concepts that differ from C# or Python.
+
+</section-content-format>
+
 <constraints>
 
 - Never guess at intent. Evaluate only what is in the diff.
-- Do not modify app source files while checking criteria.
-- It is allowed to modify tutorial docs (`tutorial/SYLLABUS.md`, section `README.md`) as part of section progression/generation.
-- If generating a new section README in this command, follow the exact `start-section` content structure (overview, subsection blocks, exercises, acceptance criteria).
-- When `tutorial/SYLLABUS.md` or any section `README.md` is modified during this command, commit automatically using the step 6 message format.
+- Do not modify app source files — only git tags, `tutorial/SYLLABUS.md`, and section READMEs.
+- When generating a new section README, validate its shape before committing:
+  - Must contain `## Overview` followed by one paragraph.
+  - Must NOT contain top-level `## Background`, `## Exercises`, or `## Acceptance Criteria` headings.
+  - Each `### X.Y — Title` block must contain exactly one nested `#### Exercise X.Y.A — ...` and one nested `#### Acceptance Criteria` before the next `---` separator.
+  - If the generated README fails this shape check, rewrite it before continuing.
+- Do not reveal answers to exercises in the subsection explanation.
+- Do not introduce tools or libraries not listed in the syllabus tech stack without flagging it.
+- Keep the tone direct and technical. No hand-holding. No "Great job!" padding.
+- When `tutorial/SYLLABUS.md` or any section `README.md` is modified, commit automatically using the step 6 message format.
 
 </constraints>

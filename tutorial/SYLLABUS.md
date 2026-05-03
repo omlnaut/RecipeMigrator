@@ -24,7 +24,7 @@ A local browser tool that:
 ## Progress Tracking
 
 - Git tags mark subsection boundaries: `s1.1-start`, `s1.1-done`, `s1.2-start`, etc.
-- The `check-my-work` skill infers current position from tags, evaluates the diff, advances subsection tags, and generates next-section content when crossing section boundaries into stubbed sections.
+- The `check-my-work` skill is the single entry point for all tutorial progression: it evaluates the diff, advances subsection tags, and automatically generates the next section's content when crossing into a stub section.
 
 ---
 

@@ -8,8 +8,6 @@ All exercises in this section use plain `.ts` files. No React, no JSX. You will 
 
 ---
 
-## Background
-
 ### 2.1 — Structural vs. nominal typing: what you need to unlearn from C#
 
 In C#, two types are the same only if they share a name or an explicit inheritance/interface relationship:
@@ -63,6 +61,27 @@ const name = "Pasta"; // inferred: "Pasta" (string literal type)
 ```
 
 This mirrors Python's distinction between a variable that may be reassigned and one that won't.
+
+#### Exercise 2.1.A — Explore structural typing
+
+**File:** `src/types/structural.ts`
+
+**Task:**
+
+1. Declare two `type` aliases, `RecipeRef` and `IngredientRef`, each with a single `id: string` property.
+2. Write a function `printId` that accepts a `RecipeRef` and logs `id` to the console.
+3. Create a variable of type `IngredientRef` and pass it to `printId`. Confirm TypeScript accepts it (it will — the shapes are identical).
+4. Add a second property `_kind: "recipe"` to `RecipeRef` and `_kind: "ingredient"` to `IngredientRef`. Re-check: now TypeScript should reject the cross-assignment.
+5. Run `npx tsc --noEmit` and read the error. Note how TypeScript reports the shape mismatch.
+
+**Why:** Demonstrates that TypeScript types are compatible by shape, and shows the minimal change required to enforce distinct identity.
+
+#### Acceptance Criteria
+
+- [ ] `src/types/structural.ts` exists
+- [ ] Two `type` aliases with a `_kind` discriminant property are defined (one `"recipe"`, one `"ingredient"`)
+- [ ] A function accepting one of the two types is defined
+- [ ] `npx tsc --noEmit` passes with no errors (after adding `_kind` to both types)
 
 ---
 
@@ -152,6 +171,30 @@ function handle(s: LoadState) {
 }
 ```
 
+#### Exercise 2.2.A — Discriminated union for load state
+
+**File:** `src/types/load-state.ts`
+
+**Task:**
+
+1. Define a discriminated union type `LoadState<T>` with four variants:
+   - `{ status: "idle" }`
+   - `{ status: "loading" }`
+   - `{ status: "error"; message: string }`
+   - `{ status: "ready"; data: T }`
+2. Write a function `describe<T>(s: LoadState<T>): string` that switches on `s.status` and returns a string for each case. Add a `default:` branch that calls `assertNever(s)` (define `assertNever` yourself).
+3. Temporarily delete one `case` from the switch. Confirm TypeScript reports an error on the `assertNever` call.
+4. Restore the missing case.
+
+**Why:** `LoadState<T>` is a pattern you'll reuse in section 3 to model async data in React state. Practising it here in plain TypeScript first makes the React version easier to read.
+
+#### Acceptance Criteria
+
+- [ ] `src/types/load-state.ts` exists
+- [ ] `LoadState<T>` is a generic discriminated union with `idle`, `loading`, `error`, and `ready` variants
+- [ ] An `assertNever` function is defined and called in the `default` branch
+- [ ] `npx tsc --noEmit` passes with no errors
+
 ---
 
 ### 2.3 — Generics and utility types (`Partial`, `Pick`, `Record`)
@@ -209,46 +252,7 @@ type RecipeIndex = Record<string, Recipe>; // keyed by id
 
 `Record<string, Recipe>` is the TypeScript idiom for what Python developers write as `dict[str, Recipe]` and C# developers write as `Dictionary<string, Recipe>`.
 
----
-
-## Exercises
-
-### Exercise 2.1 — Explore structural typing
-
-**File:** `src/types/structural.ts`
-
-**Task:**
-
-1. Declare two `type` aliases, `RecipeRef` and `IngredientRef`, each with a single `id: string` property.
-2. Write a function `printId` that accepts a `RecipeRef` and logs `id` to the console.
-3. Create a variable of type `IngredientRef` and pass it to `printId`. Confirm TypeScript accepts it (it will — the shapes are identical).
-4. Add a second property `_kind: "recipe"` to `RecipeRef` and `_kind: "ingredient"` to `IngredientRef`. Re-check: now TypeScript should reject the cross-assignment.
-5. Run `npx tsc --noEmit` and read the error. Note how TypeScript reports the shape mismatch.
-
-**Why:** Demonstrates that TypeScript types are compatible by shape, and shows the minimal change required to enforce distinct identity.
-
----
-
-### Exercise 2.2 — Discriminated union for load state
-
-**File:** `src/types/load-state.ts`
-
-**Task:**
-
-1. Define a discriminated union type `LoadState<T>` with four variants:
-   - `{ status: "idle" }`
-   - `{ status: "loading" }`
-   - `{ status: "error"; message: string }`
-   - `{ status: "ready"; data: T }`
-2. Write a function `describe<T>(s: LoadState<T>): string` that switches on `s.status` and returns a string for each case. Add a `default:` branch that calls `assertNever(s)` (define `assertNever` yourself).
-3. Temporarily delete one `case` from the switch. Confirm TypeScript reports an error on the `assertNever` call.
-4. Restore the missing case.
-
-**Why:** `LoadState<T>` is a pattern you'll reuse in section 3 to model async data in React state. Practising it here in plain TypeScript first makes the React version easier to read.
-
----
-
-### Exercise 2.3 — Utility types for recipe data
+#### Exercise 2.3.A — Utility types for recipe data
 
 **File:** `src/types/recipe.ts`
 
@@ -264,25 +268,7 @@ type RecipeIndex = Record<string, Recipe>; // keyed by id
 
 **Why:** `Recipe` is the central domain type for the app. You will extend this type in section 4 when you parse the MyCookBook XML. Practising utility-type derivation now means section 4 starts with a familiar shape.
 
----
-
-## Acceptance Criteria
-
-### 2.1 — Structural typing exploration
-
-- [ ] `src/types/structural.ts` exists
-- [ ] Two `type` aliases with a `_kind` discriminant property are defined (one `"recipe"`, one `"ingredient"`)
-- [ ] A function accepting one of the two types is defined
-- [ ] `npx tsc --noEmit` passes with no errors (after adding `_kind` to both types)
-
-### 2.2 — Discriminated union
-
-- [ ] `src/types/load-state.ts` exists
-- [ ] `LoadState<T>` is a generic discriminated union with `idle`, `loading`, `error`, and `ready` variants
-- [ ] An `assertNever` function is defined and called in the `default` branch
-- [ ] `npx tsc --noEmit` passes with no errors
-
-### 2.3 — Utility types and recipe model
+#### Acceptance Criteria
 
 - [ ] `src/types/recipe.ts` exists
 - [ ] `Recipe` type declares all five fields (`id`, `name`, `servings`, `imageFileName`, `instructions`)
