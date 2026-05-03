@@ -43,8 +43,8 @@ A local browser tool that:
 | ID  | Title                                                           | Est. Time | Status      |
 | --- | --------------------------------------------------------------- | --------- | ----------- |
 | 2.1 | Structural vs. nominal typing: what you need to unlearn from C# | 45 min    | done        |
-| 2.2 | `type` vs `interface`, union types, `unknown` vs `any`          | 45 min    | in-progress |
-| 2.3 | Generics and utility types (`Partial`, `Pick`, `Record`)        | 45 min    | not-started |
+| 2.2 | `type` vs `interface`, union types, `unknown` vs `any`          | 45 min    | done        |
+| 2.3 | Generics and utility types (`Partial`, `Pick`, `Record`)        | 45 min    | in-progress |
 
 ### Section 3 — React Fundamentals
 
