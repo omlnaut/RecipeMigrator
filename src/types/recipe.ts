@@ -6,7 +6,7 @@ type Recipe = {
   instructions: string;
 };
 
-type RecipeSummary = Pick<Recipe, "id" | "name">;
+export type RecipeSummary = Pick<Recipe, "id" | "name">;
 type RecipeDraft = Omit<Recipe, "id">;
 type RecipeIndex = Record<string, Recipe>;
 
