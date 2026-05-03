@@ -7,5 +7,6 @@
         "test": true,
         "npx tsc": true
     },
-    "markdown.preview.fontSize": 13
+    "markdown.preview.fontSize": 14,
+    "editor.formatOnSave": true
 }
