@@ -1,40 +1,20 @@
 ---
 name: start-section
-description: Generates full learning content for the next tutorial section and sets the first subsection's start tag. Reads the syllabus, all previously generated sections, and future stubs for consistency. Produces learning material, exercises, and structured acceptance criteria. Use when starting a new section.
+description: Deprecated compatibility alias. Use `check-my-work`, which now validates, advances, and generates next-section content when needed.
 ---
 
 <what-to-do>
 
-Generate the full content for the next tutorial section and set it up for the learner to begin.
+This skill is merged into `check-my-work`.
 
-Follow these steps in order:
+When invoked, do not run a separate standalone flow. Instead, run the `check-my-work` workflow and follow its progression logic:
 
-1. **Determine which section to generate.**
-   Read `tutorial/SYLLABUS.md`. Find the first section whose README still contains the stub line "Content not yet generated". That is the target section.
+- validate current subsection acceptance criteria
+- on approval, mark current subsection done
+- advance to next subsection
+- if entering a new section and the README is still a stub, generate full section content and then set the next start tag
 
-2. **Read context from already-generated sections.**
-   Read all section READMEs that are already fully generated (i.e., do NOT contain the stub line). Extract terminology, code patterns, and concepts already introduced. Do not re-introduce or re-explain these.
-
-3. **Read future section stubs.**
-   Read the remaining stub READMEs. Note what concepts are planned for later. Do not front-load content that belongs there.
-
-4. **Read the learner profile from `tutorial/SYLLABUS.md`.**
-   Tailor the content: senior backend/ML developer (Python, C#), no meaningful JavaScript experience, strong typing instincts. Move fast through syntax basics, spend real time on concepts that differ from C# or Python. No aesthetic focus.
-
-5. **Generate the section content** and write it to the target section's README.md, replacing the stub entirely.
-
-6. **Set the start tag for the first subsection.**
-   Run `git tag sX.1-start` (where X is the section number). This marks the baseline for `check-my-work` to diff against.
-   Update `tutorial/SYLLABUS.md`: set the first subsection's status to `in-progress`.
-
-7. **Auto-commit tutorial metadata/content updates.**
-   If this command changed `tutorial/SYLLABUS.md` and/or the target section `README.md`, stage only those changed files and commit them.
-   Use a message in this format:
-   - `generated subsection sX.1 content`
-     Example: `generated subsection s1.1 content`
-     If there are no changes in those files, skip committing.
-
-   Tell the learner the tag has been set and they can begin subsection X.1.
+If the user explicitly asks to start a section without checking work, still follow `check-my-work` progression semantics and do not diverge into a separate instruction set.
 
 </what-to-do>
 
@@ -78,7 +58,7 @@ Repeat the above block for each subsection. Criteria must be verifiable by readi
 - Do not reveal answers to exercises in the Background section.
 - Do not introduce tools or libraries not listed in the syllabus tech stack without flagging it.
 - Keep the tone direct and technical. No hand-holding. No "Great job!" padding.
-- The start tag is set automatically in step 6. Do not tell the user to do it manually.
-- The commit in step 7 is automatic when `tutorial/SYLLABUS.md` or the section `README.md` changed. Do not ask the user to commit manually.
+- The `check-my-work` flow sets start tags automatically. Do not tell the user to tag manually.
+- Commits remain automatic when `tutorial/SYLLABUS.md` or section `README.md` files changed.
 
 </constraints>

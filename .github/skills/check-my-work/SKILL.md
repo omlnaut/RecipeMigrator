@@ -1,11 +1,12 @@
 ---
 name: check-my-work
-description: Evaluates the learner's code changes against the current subsection's acceptance criteria. Infers current position from git tags. If all criteria pass, asks the user whether to mark the subsection as done. Use after completing a subsection's exercises.
+description: Evaluates the learner's code changes against the current subsection's acceptance criteria, then advances progress. When crossing into a new section, it sets the next start tag and generates section content if still stubbed.
 ---
 
 <what-to-do>
 
-Evaluate whether the learner has completed the current subsection's exercises, using git tags and the section README as the source of truth.
+Evaluate whether the learner has completed the current subsection's exercises, then advance to the next subsection when approved.
+This skill is the single entry point for progression, including section-content generation when needed.
 
 Follow these steps in order:
 
@@ -38,12 +39,19 @@ Follow these steps in order:
    **If the user confirms:**
    - Run `git tag sX.Y-done`
    - Determine the next subsection. If sX.Y is the last subsection in its section (e.g. s1.3 and section 1 has 3 subsections), the next is s(X+1).1. Otherwise it is sX.(Y+1).
-   - Check whether the next section's README still contains the stub line "Content not yet generated".
-     - If YES: tell the user to run the `start-section` skill before beginning the next subsection. Do NOT set the next start tag yet — `start-section` does that.
-     - If NO: run `git tag s[next]-start` and tell the user they can begin.
+   - If the next subsection is in the same section: run `git tag s[next]-start`.
+   - If the next subsection is `s(X+1).1` (entering a new, larger section):
+     - Check whether that section README contains the stub line "Content not yet generated".
+     - If the README is already generated: run `git tag s[next]-start`.
+     - If the README is still a stub: generate content for that new section before setting the start tag.
+       - Read all already-generated section READMEs (non-stubs) and extract terminology/patterns already introduced.
+       - Read all future stub READMEs and avoid front-loading concepts planned for later sections.
+       - Read learner profile from `tutorial/SYLLABUS.md` and tailor the section depth/speed to it.
+       - Replace the target section README stub with full section content, following the old `start-section` format requirements.
+       - Then run `git tag s[next]-start`.
    - Update `tutorial/SYLLABUS.md`: change the completed subsection's status to `done` and the next subsection's status to `in-progress`.
    - Auto-commit if tutorial metadata/content changed:
-     - If `tutorial/SYLLABUS.md` and/or the current section `README.md` changed, stage only those changed files and commit them.
+     - If `tutorial/SYLLABUS.md` and/or any touched section `README.md` changed (current and/or newly generated next section), stage only those changed files and commit them.
      - Commit message format: `progressed subsection sX.Y to done (next: sA.B in-progress)`
        Example: `progressed subsection s1.1 to done (next: s1.2 in-progress)`
      - If neither file changed, skip committing.
@@ -59,8 +67,9 @@ Follow these steps in order:
 <constraints>
 
 - Never guess at intent. Evaluate only what is in the diff.
-- Do not modify any source files — only git tags and SYLLABUS.md.
-- If the section README has not been generated yet (contains stub line), tell the user and stop.
-- When `tutorial/SYLLABUS.md` or the section `README.md` is modified during this command, commit automatically using the step 6 message format.
+- Do not modify app source files while checking criteria.
+- It is allowed to modify tutorial docs (`tutorial/SYLLABUS.md`, section `README.md`) as part of section progression/generation.
+- If generating a new section README in this command, follow the exact `start-section` content structure (overview, subsection blocks, exercises, acceptance criteria).
+- When `tutorial/SYLLABUS.md` or any section `README.md` is modified during this command, commit automatically using the step 6 message format.
 
 </constraints>

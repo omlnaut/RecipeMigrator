@@ -1,6 +1,6 @@
 # Section 3 — React Fundamentals
 
-> Content not yet generated. Run the `start-section` skill to create the full learning material, exercises, and acceptance criteria for this section.
+> Content not yet generated. Run the `check-my-work` skill after finishing the previous subsection; it will advance progress and generate this section automatically when needed.
 
 ## Subsections
 
