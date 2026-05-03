@@ -99,6 +99,10 @@ Context rules when generating:
 - Read all future stub READMEs. Do not front-load content planned for later sections.
 - Tailor depth and speed to the learner profile in `tutorial/SYLLABUS.md`: senior backend/ML developer (Python, C#), no meaningful JavaScript experience, strong typing instincts. Move fast through syntax basics, spend real time on concepts that differ from C# or Python.
 
+Syntax prerequisites rule: Every piece of syntax or calling convention required by an exercise task must be explicitly shown somewhere in the tutorial at or before that subsection — either in a prior subsection's conceptual explanation or in the current one. Do not assume the learner will discover syntax from context. Examples that must be shown before first use: JSX component prop syntax (`<Comp prop={value} />`), props-object destructuring in a function signature, hook call patterns, event handler types.
+
+Props wording rule: When an exercise asks the learner to create a component with multiple props, describe them as fields of a single props object, not as separate positional parameters. Correct: "a props object with fields `recipe: RecipeSummary` and `selected: boolean`". Incorrect: "a `recipe` prop ... and a `selected` prop" without clarifying they live in one object passed as the first and only argument.
+
 </section-content-format>
 
 <constraints>
