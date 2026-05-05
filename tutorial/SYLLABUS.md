@@ -51,8 +51,8 @@ A local browser tool that:
 | ID  | Title                                                    | Est. Time | Status      |
 | --- | -------------------------------------------------------- | --------- | ----------- |
 | 3.1 | Components, JSX, and typed props                         | 45 min    | done        |
-| 3.2 | `useState<T>` and event handling                         | 45 min    | in-progress |
-| 3.3 | `useEffect` and loading data (parses the MyCookBook XML) | 60 min    | not-started |
+| 3.2 | `useState<T>` and event handling                         | 45 min    | done        |
+| 3.3 | `useEffect` and loading data (parses the MyCookBook XML) | 60 min    | in-progress |
 
 ### Section 4 — Building the Recipe Viewer
 
