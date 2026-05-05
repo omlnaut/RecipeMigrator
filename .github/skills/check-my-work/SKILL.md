@@ -73,7 +73,18 @@ Then, for each subsection (X.1, X.2, X.3 etc.), write a self-contained block in 
 
 ### X.Y — Title
 
-Conceptual explanation of the key ideas for this subsection. Use comparisons to C# or Python where helpful. Include concrete code examples. Do NOT use "we will learn" — explain things directly as facts. Do not reveal answers to the exercise below.
+Conceptual explanation of the key ideas for this subsection. This must be substantive — the learner should be able to attempt the exercise using only what is written here. Target 300–600 words of explanation per subsection, not counting code blocks.
+
+Required elements in the conceptual explanation:
+
+- **Mental model first.** Open with what the thing _is_, not what it does. Name the abstraction and give an analogy to C# or Python. Then immediately call out where the analogy breaks down, because that's where bugs come from.
+- **Syntax shown before it is needed.** Every piece of syntax or calling convention required by the exercise must be shown in a labelled code example. Do not show syntax once and expect the learner to extrapolate to variations — show the variations explicitly if the exercise requires them.
+- **Concrete code examples throughout.** Every concept that can be illustrated with code must be. Examples must be self-contained (no `...` gaps), correctly typed, and use variable and type names that match the project's actual types where possible (`RecipeSummary`, `LoadState<T>`, etc.). Prefer examples in the context of this project over abstract toy examples.
+- **Wrong vs. correct pairs for common pitfalls.** When a concept has a classic mistake (e.g. in-place mutation, missing `key` prop, async effect callback), show the wrong code explicitly with a comment marking it wrong, then show the correct form. Do not just describe the mistake in prose.
+- **Tables for compact reference.** Use markdown tables when there are 3+ related options or variants that differ in a single dimension (e.g. dependency array values, event types, setState forms).
+- **C#/Python analogies named and bounded.** State the analogy explicitly ("C# analogy: ...", "Python analogy: ...") then in the same paragraph note where it breaks down.
+
+Do NOT use "we will learn" or "we will see" — explain things directly as facts. Do not reveal the answer to the exercise below. Do not pad with motivational framing.
 
 #### Exercise X.Y.A — Short title
 
@@ -99,7 +110,7 @@ Context rules when generating:
 - Read all future stub READMEs. Do not front-load content planned for later sections.
 - Tailor depth and speed to the learner profile in `tutorial/SYLLABUS.md`: senior backend/ML developer (Python, C#), no meaningful JavaScript experience, strong typing instincts. Move fast through syntax basics, spend real time on concepts that differ from C# or Python.
 
-Syntax prerequisites rule: Every piece of syntax or calling convention required by an exercise task must be explicitly shown somewhere in the tutorial at or before that subsection — either in a prior subsection's conceptual explanation or in the current one. Do not assume the learner will discover syntax from context. Examples that must be shown before first use: JSX component prop syntax (`<Comp prop={value} />`), props-object destructuring in a function signature, hook call patterns, event handler types.
+Syntax prerequisites rule: Every piece of syntax or calling convention required by an exercise task must be explicitly shown in a labelled code example in the current subsection's conceptual explanation or in a prior subsection. Do not assume the learner will discover syntax from context, and do not show a base form and expect variations to be inferred — if the exercise requires a variation, show it. Examples that must be shown before first use: JSX component prop syntax (`<Comp prop={value} />`), props-object destructuring in a function signature, hook call patterns, event handler types.
 
 Props wording rule: When an exercise asks the learner to create a component with multiple props, describe them as fields of a single props object, not as separate positional parameters. Correct: "a props object with fields `recipe: RecipeSummary` and `selected: boolean`". Incorrect: "a `recipe` prop ... and a `selected` prop" without clarifying they live in one object passed as the first and only argument.
 
