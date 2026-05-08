@@ -52,13 +52,13 @@ A local browser tool that:
 | --- | -------------------------------------------------------- | --------- | ----------- |
 | 3.1 | Components, JSX, and typed props                         | 45 min    | done        |
 | 3.2 | `useState<T>` and event handling                         | 45 min    | done        |
-| 3.3 | `useEffect` and loading data (parses the MyCookBook XML) | 60 min    | in-progress |
+| 3.3 | `useEffect` and loading data (parses the MyCookBook XML) | 60 min    | done        |
 
 ### Section 4 — Building the Recipe Viewer
 
 | ID  | Title                                                     | Est. Time | Status      |
 | --- | --------------------------------------------------------- | --------- | ----------- |
-| 4.1 | Domain modelling: TypeScript types from the XML structure | 45 min    | not-started |
+| 4.1 | Domain modelling: TypeScript types from the XML structure | 45 min    | in-progress |
 | 4.2 | Recipe list with image display                            | 60 min    | not-started |
 | 4.3 | Multi-select state and selection UI                       | 45 min    | not-started |
 
