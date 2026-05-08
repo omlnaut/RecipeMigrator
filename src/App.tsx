@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { RecipeRow } from "./components/RecipeRow";
 import type { RecipeSummary } from "./types/recipe";
+import { describe, type LoadState } from "./types/load-state";
 
 function App() {
+  const [loadingState, setLoadingState] = useState<LoadState<string>>({
+    status: "idle",
+  });
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [text, setText] = useState<string>("not loaded");
-  const [shouldLoad, setShouldLoad] = useState<boolean>(false);
+  const [alreadyLoaded, setAlreadyLoaded] = useState<boolean>(false);
 
   function onToggle(id: string) {
     setSelectedIds((prev) =>
@@ -15,15 +18,20 @@ function App() {
 
   useEffect(() => {
     async function load() {
-      if (!shouldLoad) {
+      if (!alreadyLoaded) {
         return;
       }
-      const response = await fetch("/cookbook_recipes.xml");
-      const text = await response.text();
-      setText(text);
+      setLoadingState({ status: "loading" });
+      try {
+        const response = await fetch("/cookbook_recipes.xml");
+        const text = await response.text();
+        setLoadingState({ status: "ready", data: text });
+      } catch {
+        setLoadingState({ status: "error", message: "error loading recipes" });
+      }
     }
     load();
-  }, [shouldLoad]);
+  }, [alreadyLoaded]);
 
   const recipes: RecipeSummary[] = [
     { id: "1", name: "first" },
@@ -41,10 +49,13 @@ function App() {
           onToggle={onToggle}
         ></RecipeRow>
       ))}
-      <button disabled={shouldLoad} onClick={() => setShouldLoad(true)}>
-        Load recipes
-      </button>
-      <p>{text}</p>
+      <p>
+        <button disabled={alreadyLoaded} onClick={() => setAlreadyLoaded(true)}>
+          Load recipes
+        </button>
+        <br />
+        {describe(loadingState)}
+      </p>
     </div>
   );
 }
