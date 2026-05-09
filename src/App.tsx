@@ -27,11 +27,11 @@ function App() {
       try {
         const response = await fetch("/cookbook_recipes.xml");
         const parsed = parseRecipes(await response.text());
-        setParsedRecipes(parsed);
         setLoadingState({
           status: "ready",
           data: parsed.length.toString(),
         });
+        setParsedRecipes(parsed);
       } catch {
         setLoadingState({ status: "error", message: "error loading recipes" });
       }

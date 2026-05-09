@@ -181,7 +181,7 @@ The local `text` helper avoids repeating `el.querySelector(tag)?.textContent ?? 
 
 **File:** `src/types/recipe.ts` (add the type), `src/lib/parseRecipes.ts` (create this file and directory)
 
-**Task:** Export a `ParsedRecipe` type from `src/types/recipe.ts`. Then create `src/lib/parseRecipes.ts` and export a `parseRecipes(xmlText: string): ParsedRecipe[]` function that uses `DOMParser` to parse the XML and returns a typed array. In `App.tsx`, call `parseRecipes` when `loadingState.status === "ready"` and store the result in a new state variable so you can verify the count of parsed recipes in the UI or console.
+**Task:** Export a `ParsedRecipe` type from `src/types/recipe.ts`. Then create `src/lib/parseRecipes.ts` and export a `parseRecipes(xmlText: string): ParsedRecipe[]` function that uses `DOMParser` to parse the XML and returns a typed array. In `App.tsx`, after a successful XML fetch (the same path that sets `loadingState` to `"ready"`), call `parseRecipes` and store the result in a new state variable so you can verify the count of parsed recipes in the UI or console.
 
 **Why:** This is the typed deserialization boundary — everything else in the app works with `ParsedRecipe[]`, never with raw XML strings or DOM nodes.
 
@@ -190,7 +190,7 @@ The local `text` helper avoids repeating `el.querySelector(tag)?.textContent ?? 
 - [ ] `ParsedRecipe` is exported from `src/types/recipe.ts` with at least `title: string`, `ingredients: string[]`, `instructions: string[]`, `imagepath: string`, and `rating: number`
 - [ ] `src/lib/parseRecipes.ts` exports `parseRecipes(xmlText: string): ParsedRecipe[]`
 - [ ] The function uses `DOMParser` to parse the XML text
-- [ ] `App.tsx` calls `parseRecipes` when `loadingState.status === "ready"` and the result is stored in component state
+- [ ] `App.tsx` calls `parseRecipes` after a successful XML load and stores the result in component state
 
 ---
 
