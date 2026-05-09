@@ -58,8 +58,8 @@ A local browser tool that:
 
 | ID  | Title                                                     | Est. Time | Status      |
 | --- | --------------------------------------------------------- | --------- | ----------- |
-| 4.1 | Domain modelling: TypeScript types from the XML structure | 45 min    | in-progress |
-| 4.2 | Recipe list with image display                            | 60 min    | not-started |
+| 4.1 | Domain modelling: TypeScript types from the XML structure | 45 min    | done        |
+| 4.2 | Recipe list with image display                            | 60 min    | in-progress |
 | 4.3 | Multi-select state and selection UI                       | 45 min    | not-started |
 
 ### Section 5 — Mealie Export
