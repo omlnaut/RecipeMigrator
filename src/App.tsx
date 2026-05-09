@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { RecipeRow } from "./components/RecipeRow";
-import type { RecipeSummary } from "./types/recipe";
 import { describe, type LoadState } from "./types/load-state";
+import { parseRecipes } from "./lib/parseRecipes";
+import type { ParsedRecipe, RecipeSummary } from "./types/recipe";
 
 function App() {
   const [loadingState, setLoadingState] = useState<LoadState<string>>({
@@ -9,6 +10,7 @@ function App() {
   });
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [alreadyLoaded, setAlreadyLoaded] = useState<boolean>(false);
+  const [parsedRecipes, setParsedRecipes] = useState<ParsedRecipe[]>([]);
 
   function onToggle(id: string) {
     setSelectedIds((prev) =>
@@ -24,8 +26,12 @@ function App() {
       setLoadingState({ status: "loading" });
       try {
         const response = await fetch("/cookbook_recipes.xml");
-        const text = await response.text();
-        setLoadingState({ status: "ready", data: text });
+        const parsed = parseRecipes(await response.text());
+        setParsedRecipes(parsed);
+        setLoadingState({
+          status: "ready",
+          data: parsed.length.toString(),
+        });
       } catch {
         setLoadingState({ status: "error", message: "error loading recipes" });
       }
