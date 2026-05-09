@@ -47,10 +47,10 @@ export type ParsedRecipe = {
   preptime: string;
   cooktime: string;
   description: string;
-  ingredients: string[];   // <li> children of <ingredient>
-  instructions: string[];  // <li> children of <recipetext>
+  ingredients: string[]; // <li> children of <ingredient>
+  instructions: string[]; // <li> children of <recipetext>
   url: string;
-  imagepath: string;       // raw Android path from XML
+  imagepath: string; // raw Android path from XML
   quantity: string;
   rating: number;
   category: string;
@@ -115,13 +115,14 @@ The optional chain (`?.`) short-circuits to `undefined` when `querySelector` ret
 ```ts
 const ingredientEl = el.querySelector("ingredient");
 const ingredients: string[] = Array.from(
-  ingredientEl?.querySelectorAll("li") ?? []
+  ingredientEl?.querySelectorAll("li") ?? [],
 ).map((li) => li.textContent ?? "");
 ```
 
 `ingredientEl?.querySelectorAll("li") ?? []` — the optional chain handles a missing `<ingredient>`; `?? []` ensures `Array.from` always receives an iterable.
 
 **Wrong — omitting the fallback:**
+
 ```ts
 // TypeScript error: Argument of type 'NodeListOf<Element> | undefined' is not
 // assignable to parameter of type 'Iterable<unknown>'
@@ -129,10 +130,11 @@ const ingredients = Array.from(ingredientEl?.querySelectorAll("li")).map(...);
 ```
 
 **Correct:**
+
 ```ts
-const ingredients = Array.from(
-  ingredientEl?.querySelectorAll("li") ?? []
-).map((li) => li.textContent ?? "");
+const ingredients = Array.from(ingredientEl?.querySelectorAll("li") ?? []).map(
+  (li) => li.textContent ?? "",
+);
 ```
 
 #### Full parser shape
@@ -156,10 +158,10 @@ export function parseRecipes(xmlText: string): ParsedRecipe[] {
       cooktime: text("cooktime"),
       description: text("description"),
       ingredients: Array.from(
-        el.querySelector("ingredient")?.querySelectorAll("li") ?? []
+        el.querySelector("ingredient")?.querySelectorAll("li") ?? [],
       ).map((li) => li.textContent ?? ""),
       instructions: Array.from(
-        el.querySelector("recipetext")?.querySelectorAll("li") ?? []
+        el.querySelector("recipetext")?.querySelectorAll("li") ?? [],
       ).map((li) => li.textContent ?? ""),
       url: text("url"),
       imagepath: text("imagepath"),
@@ -251,12 +253,14 @@ Some recipes have an `imagepath` that resolves to a filename that does not exist
 `e.currentTarget` is typed `EventTarget` by the DOM event model — it does not have `style`. The cast `as HTMLImageElement` is correct here because the handler is attached to an `<img>` element and the DOM spec guarantees `currentTarget` is that element. This is one of the few valid uses of `as` in this codebase.
 
 **Wrong — accessing `.style` without the cast:**
+
 ```ts
 // TypeScript error: Property 'style' does not exist on type 'EventTarget'
 onError={(e) => { e.currentTarget.style.display = "none"; }}
 ```
 
 **Correct:**
+
 ```ts
 onError={(e) => {
   (e.currentTarget as HTMLImageElement).style.display = "none";
@@ -308,9 +312,11 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
 Rendering the list in `App.tsx` when data is ready — `title` is used as the `key` since `ParsedRecipe` has no `id`:
 
 ```tsx
-{parsedRecipes.map((recipe) => (
-  <RecipeCard key={recipe.title} recipe={recipe} />
-))}
+{
+  parsedRecipes.map((recipe) => (
+    <RecipeCard key={recipe.title} recipe={recipe} />
+  ));
+}
 ```
 
 ---
@@ -343,7 +349,7 @@ const [selectedTitles, setSelectedTitles] = useState<string[]>([]);
 
 function onToggle(title: string) {
   setSelectedTitles((prev) =>
-    prev.includes(title) ? prev.filter((t) => t !== title) : [...prev, title]
+    prev.includes(title) ? prev.filter((t) => t !== title) : [...prev, title],
   );
 }
 ```
@@ -398,12 +404,14 @@ An export button that is inert until something is selected:
 `disabled` is a boolean prop on `<button>`. When `true`, the button is non-interactive.
 
 **Wrong — storing count as separate state:**
+
 ```ts
 // Out of sync with selectedTitles on every update
 const [count, setCount] = useState(0);
 ```
 
 **Correct — derive from existing state:**
+
 ```ts
 // Always consistent; recomputed on every render for free
 const count = selectedTitles.length;
