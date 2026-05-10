@@ -3,6 +3,7 @@ import { RecipeRow } from "./components/RecipeRow";
 import { describe, type LoadState } from "./types/load-state";
 import { parseRecipes } from "./lib/parseRecipes";
 import type { ParsedRecipe, RecipeSummary } from "./types/recipe";
+import { RecipeCard } from "./components/RecipeCard";
 
 function App() {
   const [loadingState, setLoadingState] = useState<LoadState<string>>({
@@ -27,9 +28,11 @@ function App() {
       try {
         const response = await fetch("/cookbook_recipes.xml");
         const parsed = parseRecipes(await response.text());
+        const filename = parsed[0].imagepath?.split("/").at(-1);
+        const src = filename ? "images/" + filename : null;
         setLoadingState({
           status: "ready",
-          data: parsed.length.toString(),
+          data: src ?? "", //parsed.length.toString(),
         });
         setParsedRecipes(parsed);
       } catch {
@@ -62,6 +65,10 @@ function App() {
         <br />
         {describe(loadingState)}
       </p>
+      {loadingState.status == "ready" &&
+        parsedRecipes.map((r) => {
+          return <RecipeCard key={r.title} recipe={r} />;
+        })}
     </div>
   );
 }
