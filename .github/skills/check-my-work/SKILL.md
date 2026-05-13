@@ -30,7 +30,7 @@ Follow these steps in order:
    Be strict: if a criterion is ambiguous in the diff, mark it as not yet met and explain what is missing.
 
 5. **Report results.**
-   Show the full checklist with each item marked ✅ or ❌, plus a brief explanation for any ❌.
+   Show the full checklist with each item marked ✅ or ❌, plus a brief explanation for any ❌. Also check the boxes in the README.md file to visually confirm they match the evaluation.
 
 6. **If all criteria pass:**
    Ask the user: "All checks passed ✅. Mark subsection sX.Y as done and advance to the next one? (yes / no)"
