@@ -18,3 +18,23 @@
   max-width: 72rem;
   margin: 0 auto var(--space-xl);
 }
+
+.recipe-card {
+  border: 1px solid rgba(43, 36, 28, 0.12);
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.recipe-card--selected {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(143, 61, 46, 0.16);
+}
+
+.recipe-card__image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 18px;
+}
