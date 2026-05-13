@@ -431,8 +431,8 @@ Any value that is a pure function of existing state is a `const` computed inline
 
 #### Acceptance Criteria
 
-- [ ] `RecipeCard` props include `selected: boolean` and `onToggle: (title: string) => void`
-- [ ] `App.tsx` manages `string[]` state for selected titles and wires a toggle handler to each card
-- [ ] Clicking a `RecipeCard` toggles its selection, with a visible UI change
-- [ ] The count of selected recipes is displayed
+- [x] `RecipeCard` props include `selected: boolean` and `onToggle: (title: string) => void`
+- [x] `App.tsx` manages `string[]` state for selected titles and wires a toggle handler to each card
+- [x] Clicking a `RecipeCard` toggles its selection, with a visible UI change
+- [x] The count of selected recipes is displayed
 - [ ] An "Export selected" `<button>` is rendered and has `disabled={selectedTitles.length === 0}`

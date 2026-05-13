@@ -9,12 +9,12 @@ function App() {
   const [loadingState, setLoadingState] = useState<LoadState<string>>({
     status: "idle",
   });
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [selectedTitles, setSelectedTitles] = useState<string[]>([]);
   const [alreadyLoaded, setAlreadyLoaded] = useState<boolean>(false);
   const [parsedRecipes, setParsedRecipes] = useState<ParsedRecipe[]>([]);
 
   function onToggle(id: string) {
-    setSelectedIds((prev) =>
+    setSelectedTitles((prev) =>
       prev.includes(id) ? prev.filter((x) => x != id) : [...prev, id],
     );
   }
@@ -42,32 +42,28 @@ function App() {
     load();
   }, [alreadyLoaded]);
 
-  const recipes: RecipeSummary[] = [
-    { id: "1", name: "first" },
-    { id: "2", name: "second" },
-  ];
-
   return (
     <div>
       <h1>Recipe Migrator</h1>
-      {recipes.map((r) => (
-        <RecipeRow
-          key={r.id}
-          recipe={r}
-          selected={selectedIds.includes(r.id)}
-          onToggle={onToggle}
-        ></RecipeRow>
-      ))}
       <p>
+        <p>{selectedTitles.length} recipes selected</p>
         <button disabled={alreadyLoaded} onClick={() => setAlreadyLoaded(true)}>
           Load recipes
         </button>
+        <button disabled={selectedTitles.length === 0}>Export selected</button>
         <br />
         {describe(loadingState)}
       </p>
       {loadingState.status == "ready" &&
         parsedRecipes.map((r) => {
-          return <RecipeCard key={r.title} recipe={r} />;
+          return (
+            <RecipeCard
+              key={r.title}
+              recipe={r}
+              selected={selectedTitles.includes(r.title)}
+              onToggle={onToggle}
+            />
+          );
         })}
     </div>
   );

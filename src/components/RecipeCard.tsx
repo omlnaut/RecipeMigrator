@@ -2,14 +2,19 @@ import type { ParsedRecipe } from "../types/recipe";
 
 type RecipeCardProps = {
   recipe: ParsedRecipe;
+  selected: boolean;
+  onToggle: (title: string) => void;
 };
 
-export function RecipeCard({ recipe }: RecipeCardProps) {
+export function RecipeCard({ recipe, selected, onToggle }: RecipeCardProps) {
   const filename = recipe.imagepath?.split("/").at(-1);
   const src = filename ? "images/" + filename : null;
 
   return (
-    <div>
+    <div
+      onClick={() => onToggle(recipe.title)}
+      style={{ outline: selected ? "2px solid blue" : "none" }}
+    >
       {src !== null && (
         <img
           src={src}
