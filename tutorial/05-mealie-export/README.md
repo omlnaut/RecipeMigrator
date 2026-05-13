@@ -175,10 +175,10 @@ Images need explicit constraints or they will render at inconsistent sizes. Use 
 
 #### Acceptance Criteria
 
-- [ ] `src/components/RecipeCard.tsx` uses class names for card structure and selection state
+- [x] `src/components/RecipeCard.tsx` uses class names for card structure and selection state
 - [ ] The selected visual treatment is expressed in `src/App.css`, not only through inline `style`
-- [ ] The recipe image is styled with explicit sizing rules so cards remain visually consistent
-- [ ] Clicking a card still toggles selection after the styling refactor
+- [x] The recipe image is styled with explicit sizing rules so cards remain visually consistent
+- [x] Clicking a card still toggles selection after the styling refactor
 
 ---
 

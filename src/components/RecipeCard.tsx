@@ -14,11 +14,7 @@ export function RecipeCard({ recipe, selected, onToggle }: RecipeCardProps) {
   if (selected) className += " recipe-card--selected";
 
   return (
-    <div
-      onClick={() => onToggle(recipe.title)}
-      className={className}
-      style={{ outline: selected ? "2px solid blue" : "none" }}
-    >
+    <div onClick={() => onToggle(recipe.title)} className={className}>
       {src !== null && (
         <img
           className="recipe-card__image"
