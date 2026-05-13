@@ -27,7 +27,13 @@ Follow these steps in order:
 
 4. **Evaluate each criterion.**
    Go through every criterion in the checklist. For each one, determine from the diff whether it is satisfied.
-   Be strict: if a criterion is ambiguous in the diff, mark it as not yet met and explain what is missing.
+   Be strict about behaviour and structure: if a criterion is ambiguous in the diff, mark it as not yet met and explain what is missing.
+   Use fuzzy matching for minor, non-semantic deviations. If the learner's code clearly satisfies the intended behaviour but differs in incidental wording or naming, mark it as satisfied.
+   Examples of acceptable fuzzy matches:
+   - button or heading text with the same meaning (`Export recipes` vs `Export selected`) when the exercise is testing wiring or disabled logic rather than exact copy
+   - equivalent variable or handler names (`handleToggle` vs `onToggle`)
+   - equivalent JSX/CSS structure that produces the required visible behaviour
+   Only require an exact literal match when the criterion explicitly tests that literal text, exact API name, exact file path, or another value whose spelling is itself the point of the exercise.
 
 5. **Report results.**
    Show the full checklist with each item marked ✅ or ❌, plus a brief explanation for any ❌. Also check the boxes in the README.md file to visually confirm they match the evaluation.
@@ -119,6 +125,7 @@ Props wording rule: When an exercise asks the learner to create a component with
 <constraints>
 
 - Never guess at intent. Evaluate only what is in the diff.
+- Use fuzzy matching only for superficial deviations. Do not wave through missing behaviour, missing types, missing files, or materially different UI/API semantics.
 - Do not modify app source files — only git tags, `tutorial/SYLLABUS.md`, and section READMEs.
 - When generating a new section README, validate its shape before committing:
   - Must contain `## Overview` followed by one paragraph.
