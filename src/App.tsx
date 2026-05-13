@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { RecipeRow } from "./components/RecipeRow";
 import { describe, type LoadState } from "./types/load-state";
 import { parseRecipes } from "./lib/parseRecipes";
-import type { ParsedRecipe, RecipeSummary } from "./types/recipe";
+import type { ParsedRecipe } from "./types/recipe";
 import { RecipeCard } from "./components/RecipeCard";
+import "./App.css";
 
 function App() {
   const [loadingState, setLoadingState] = useState<LoadState<string>>({
@@ -43,28 +43,31 @@ function App() {
   }, [alreadyLoaded]);
 
   return (
-    <div>
-      <h1>Recipe Migrator</h1>
-      <p>
-        <p>{selectedTitles.length} recipes selected</p>
+    <div className="app-shell">
+      <header className="app-header">
+        <h1 className="app-title">Recipe Migrator</h1>
+      </header>
+      <div className="toolbar">
         <button disabled={alreadyLoaded} onClick={() => setAlreadyLoaded(true)}>
           Load recipes
         </button>
-        <button disabled={selectedTitles.length === 0}>Export selected</button>
-        <br />
-        {describe(loadingState)}
-      </p>
-      {loadingState.status == "ready" &&
-        parsedRecipes.map((r) => {
-          return (
-            <RecipeCard
-              key={r.title}
-              recipe={r}
-              selected={selectedTitles.includes(r.title)}
-              onToggle={onToggle}
-            />
-          );
-        })}
+        <button disabled={selectedTitles.length === 0}>
+          Export selected ({selectedTitles.length})
+        </button>
+      </div>
+      <div className="recipe-list">
+        {loadingState.status == "ready" &&
+          parsedRecipes.map((r) => {
+            return (
+              <RecipeCard
+                key={r.title}
+                recipe={r}
+                selected={selectedTitles.includes(r.title)}
+                onToggle={onToggle}
+              />
+            );
+          })}
+      </div>
     </div>
   );
 }
