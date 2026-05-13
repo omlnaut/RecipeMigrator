@@ -56,16 +56,16 @@ A local browser tool that:
 
 ### Section 4 — Building the Recipe Viewer
 
-| ID  | Title                                                     | Est. Time | Status      |
-| --- | --------------------------------------------------------- | --------- | ----------- |
-| 4.1 | Domain modelling: TypeScript types from the XML structure | 45 min    | done        |
-| 4.2 | Recipe list with image display                            | 60 min    | done        |
-| 4.3 | Multi-select state and selection UI                       | 45 min    | done        |
+| ID  | Title                                                     | Est. Time | Status |
+| --- | --------------------------------------------------------- | --------- | ------ |
+| 4.1 | Domain modelling: TypeScript types from the XML structure | 45 min    | done   |
+| 4.2 | Recipe list with image display                            | 60 min    | done   |
+| 4.3 | Multi-select state and selection UI                       | 45 min    | done   |
 
 ### Section 5 — CSS Polish For The Recipe Viewer
 
-| ID  | Title                                       | Est. Time | Status      |
-| --- | ------------------------------------------- | --------- | ----------- |
-| 5.1 | App shell, class names, and CSS tokens      | 60 min    | in-progress |
+| ID  | Title                                                            | Est. Time | Status      |
+| --- | ---------------------------------------------------------------- | --------- | ----------- |
+| 5.1 | App shell, class names, and CSS tokens                           | 60 min    | in-progress |
 | 5.2 | Card presentation, modifier classes, and visible selection state | 45 min    | not-started |
-| 5.3 | Responsive layout, button states, and narrow-screen behaviour | 45 min    | not-started |
+| 5.3 | Responsive layout, button states, and narrow-screen behaviour    | 45 min    | not-started |

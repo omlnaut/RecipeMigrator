@@ -33,7 +33,7 @@ Follow these steps in order:
    - button or heading text with the same meaning (`Export recipes` vs `Export selected`) when the exercise is testing wiring or disabled logic rather than exact copy
    - equivalent variable or handler names (`handleToggle` vs `onToggle`)
    - equivalent JSX/CSS structure that produces the required visible behaviour
-   Only require an exact literal match when the criterion explicitly tests that literal text, exact API name, exact file path, or another value whose spelling is itself the point of the exercise.
+     Only require an exact literal match when the criterion explicitly tests that literal text, exact API name, exact file path, or another value whose spelling is itself the point of the exercise.
 
 5. **Report results.**
    Show the full checklist with each item marked ✅ or ❌, plus a brief explanation for any ❌. Also check the boxes in the README.md file to visually confirm they match the evaluation.

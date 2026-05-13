@@ -15,13 +15,13 @@ For this app, start by giving the DOM useful hooks. JSX uses `className`, not `c
 ```tsx
 // App.tsx
 export default function App() {
-	return (
-		<div className="app-shell">
-			<header className="app-header">
-				<h1 className="app-title">Recipe Migrator</h1>
-			</header>
-		</div>
-	);
+  return (
+    <div className="app-shell">
+      <header className="app-header">
+        <h1 className="app-title">Recipe Migrator</h1>
+      </header>
+    </div>
+  );
 }
 ```
 
@@ -36,13 +36,13 @@ CSS custom properties are the lowest-friction way to define reusable design toke
 ```css
 /* App.css */
 :root {
-	--page-bg: #f6f1e8;
-	--panel-bg: rgba(255, 252, 246, 0.92);
-	--ink: #2b241c;
-	--accent: #8f3d2e;
-	--radius-lg: 24px;
-	--space-md: 1rem;
-	--space-xl: 2rem;
+  --page-bg: #f6f1e8;
+  --panel-bg: rgba(255, 252, 246, 0.92);
+  --ink: #2b241c;
+  --accent: #8f3d2e;
+  --radius-lg: 24px;
+  --space-md: 1rem;
+  --space-xl: 2rem;
 }
 ```
 
@@ -53,7 +53,7 @@ Wrong approach: leaving structural elements anonymous and then styling generic t
 ```css
 /* Wrong: too broad, hard to reason about */
 div {
-	margin: 1rem;
+  margin: 1rem;
 }
 ```
 
@@ -61,23 +61,23 @@ Correct approach: assign semantic class names in JSX, then target those classes.
 
 ```css
 .app-shell {
-	min-height: 100vh;
-	padding: var(--space-xl);
+  min-height: 100vh;
+  padding: var(--space-xl);
 }
 
 .app-header {
-	max-width: 72rem;
-	margin: 0 auto var(--space-xl);
+  max-width: 72rem;
+  margin: 0 auto var(--space-xl);
 }
 ```
 
 Use class names for structure and variables for repeated values. Do not scatter hard-coded spacing and colors across unrelated selectors.
 
-| Concern | JSX hook | CSS mechanism | Why |
-| --- | --- | --- | --- |
-| Page structure | `className="app-shell"` | layout rules | Makes the root container explicit |
-| Reused values | none | `:root` custom properties | Centralises colors and spacing |
-| Component state | conditional `className` | modifier classes | Separates logic from presentation |
+| Concern         | JSX hook                | CSS mechanism             | Why                               |
+| --------------- | ----------------------- | ------------------------- | --------------------------------- |
+| Page structure  | `className="app-shell"` | layout rules              | Makes the root container explicit |
+| Reused values   | none                    | `:root` custom properties | Centralises colors and spacing    |
+| Component state | conditional `className` | modifier classes          | Separates logic from presentation |
 
 #### Exercise 5.1.A — Create a styled app shell
 
@@ -104,21 +104,21 @@ A typed props object can drive conditional classes directly:
 
 ```tsx
 type RecipeCardProps = {
-	recipe: ParsedRecipe;
-	selected: boolean;
-	onToggle: (title: string) => void;
+  recipe: ParsedRecipe;
+  selected: boolean;
+  onToggle: (title: string) => void;
 };
 
 export function RecipeCard({ recipe, selected, onToggle }: RecipeCardProps) {
-	const cardClassName = selected
-		? "recipe-card recipe-card--selected"
-		: "recipe-card";
+  const cardClassName = selected
+    ? "recipe-card recipe-card--selected"
+    : "recipe-card";
 
-	return (
-		<article className={cardClassName} onClick={() => onToggle(recipe.title)}>
-			<h2 className="recipe-card__title">{recipe.title}</h2>
-		</article>
-	);
+  return (
+    <article className={cardClassName} onClick={() => onToggle(recipe.title)}>
+      <h2 className="recipe-card__title">{recipe.title}</h2>
+    </article>
+  );
 }
 ```
 
@@ -135,13 +135,16 @@ Correct: use a modifier class and let CSS express the state.
 
 ```css
 .recipe-card {
-	border: 1px solid rgba(43, 36, 28, 0.12);
-	transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  border: 1px solid rgba(43, 36, 28, 0.12);
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
 }
 
 .recipe-card--selected {
-	border-color: var(--accent);
-	box-shadow: 0 0 0 3px rgba(143, 61, 46, 0.16);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(143, 61, 46, 0.16);
 }
 ```
 
@@ -149,18 +152,18 @@ Images need explicit constraints or they will render at inconsistent sizes. Use 
 
 ```css
 .recipe-card__image {
-	width: 100%;
-	aspect-ratio: 4 / 3;
-	object-fit: cover;
-	border-radius: 18px;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 18px;
 }
 ```
 
-| State | JSX expression | CSS selector |
-| --- | --- | --- |
-| Base card | `"recipe-card"` | `.recipe-card` |
+| State         | JSX expression                                                   | CSS selector             |
+| ------------- | ---------------------------------------------------------------- | ------------------------ |
+| Base card     | `"recipe-card"`                                                  | `.recipe-card`           |
 | Selected card | `selected ? "recipe-card recipe-card--selected" : "recipe-card"` | `.recipe-card--selected` |
-| Text element | `className="recipe-card__title"` | `.recipe-card__title` |
+| Text element  | `className="recipe-card__title"`                                 | `.recipe-card__title`    |
 
 #### Exercise 5.2.A — Move selection visuals into CSS
 
@@ -189,14 +192,14 @@ A basic media query looks like this:
 
 ```css
 @media (max-width: 700px) {
-	.app-shell {
-		padding: 1rem;
-	}
+  .app-shell {
+    padding: 1rem;
+  }
 
-	.app-toolbar {
-		flex-direction: column;
-		align-items: stretch;
-	}
+  .app-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
 ```
 
@@ -206,14 +209,14 @@ Buttons also need explicit states. Disabled is not just a boolean in React; it b
 
 ```css
 .toolbar-button {
-	border: 0;
-	border-radius: 999px;
-	padding: 0.8rem 1.2rem;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.8rem 1.2rem;
 }
 
 .toolbar-button:disabled {
-	cursor: not-allowed;
-	opacity: 0.45;
+  cursor: not-allowed;
+  opacity: 0.45;
 }
 ```
 
@@ -222,7 +225,7 @@ Wrong: rely on browser defaults and hope the state is obvious.
 ```css
 /* Wrong: no disabled state, no responsive adjustment */
 .toolbar-button {
-	padding: 0.5rem;
+  padding: 0.5rem;
 }
 ```
 
@@ -230,23 +233,23 @@ Correct: define base, hover/focus, and disabled states, then add viewport-specif
 
 ```css
 .recipe-list {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
-	gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 1rem;
 }
 
 @media (max-width: 700px) {
-	.recipe-list {
-		grid-template-columns: 1fr;
-	}
+  .recipe-list {
+    grid-template-columns: 1fr;
+  }
 }
 ```
 
-| Concern | Base rule | Narrow-screen override |
-| --- | --- | --- |
-| Toolbar layout | horizontal flex row | vertical stack |
-| Recipe list | multi-column grid | single column |
-| Page padding | generous desktop spacing | reduced mobile spacing |
+| Concern        | Base rule                | Narrow-screen override |
+| -------------- | ------------------------ | ---------------------- |
+| Toolbar layout | horizontal flex row      | vertical stack         |
+| Recipe list    | multi-column grid        | single column          |
+| Page padding   | generous desktop spacing | reduced mobile spacing |
 
 #### Exercise 5.3.A — Make the viewer responsive and readable on mobile
 
