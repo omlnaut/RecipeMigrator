@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { describe, type LoadState } from "./types/load-state";
+import { type LoadState } from "./types/load-state";
 import { parseRecipes } from "./lib/parseRecipes";
 import type { ParsedRecipe } from "./types/recipe";
 import { RecipeCard } from "./components/RecipeCard";
