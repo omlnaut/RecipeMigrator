@@ -10,8 +10,8 @@ A local browser tool that:
 
 1. Loads a MyCookBook XML export and its images
 2. Displays recipes with images, selectable
-3. Converts selected recipes to Mealie JSON format (via Gemini) and validates the output with Zod
-4. Exports validated recipes as a downloadable JSON file
+3. Makes the current recipe viewer readable, selectable, and visually coherent with CSS
+4. Leaves the typed React data flow intact while improving layout and responsiveness
 
 ## Tech Stack
 
@@ -60,12 +60,12 @@ A local browser tool that:
 | --- | --------------------------------------------------------- | --------- | ----------- |
 | 4.1 | Domain modelling: TypeScript types from the XML structure | 45 min    | done        |
 | 4.2 | Recipe list with image display                            | 60 min    | done        |
-| 4.3 | Multi-select state and selection UI                       | 45 min    | in-progress |
+| 4.3 | Multi-select state and selection UI                       | 45 min    | done        |
 
-### Section 5 — Mealie Export
+### Section 5 — CSS Polish For The Recipe Viewer
 
 | ID  | Title                                       | Est. Time | Status      |
 | --- | ------------------------------------------- | --------- | ----------- |
-| 5.1 | Zod schema from the Mealie Recipe model     | 60 min    | not-started |
-| 5.2 | Validating Gemini output against the schema | 45 min    | not-started |
-| 5.3 | Export: generating a downloadable JSON file | 45 min    | not-started |
+| 5.1 | App shell, class names, and CSS tokens      | 60 min    | in-progress |
+| 5.2 | Card presentation, modifier classes, and visible selection state | 45 min    | not-started |
+| 5.3 | Responsive layout, button states, and narrow-screen behaviour | 45 min    | not-started |

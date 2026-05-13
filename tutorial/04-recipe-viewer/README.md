@@ -435,4 +435,4 @@ Any value that is a pure function of existing state is a `const` computed inline
 - [x] `App.tsx` manages `string[]` state for selected titles and wires a toggle handler to each card
 - [x] Clicking a `RecipeCard` toggles its selection, with a visible UI change
 - [x] The count of selected recipes is displayed
-- [ ] An "Export selected" `<button>` is rendered and has `disabled={selectedTitles.length === 0}`
+- [x] An "Export selected" `<button>` is rendered and has `disabled={selectedTitles.length === 0}`
