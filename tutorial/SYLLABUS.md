@@ -66,6 +66,6 @@ A local browser tool that:
 
 | ID  | Title                                                            | Est. Time | Status      |
 | --- | ---------------------------------------------------------------- | --------- | ----------- |
-| 5.1 | App shell, class names, and CSS tokens                           | 60 min    | in-progress |
-| 5.2 | Card presentation, modifier classes, and visible selection state | 45 min    | not-started |
+| 5.1 | App shell, class names, and CSS tokens                           | 60 min    | done        |
+| 5.2 | Card presentation, modifier classes, and visible selection state | 45 min    | in-progress |
 | 5.3 | Responsive layout, button states, and narrow-screen behaviour    | 45 min    | not-started |

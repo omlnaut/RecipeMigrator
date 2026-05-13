@@ -89,10 +89,10 @@ Use class names for structure and variables for repeated values. Do not scatter 
 
 #### Acceptance Criteria
 
-- [ ] `src/App.tsx` imports `./App.css`
-- [ ] The top-level JSX in `src/App.tsx` includes class names for an app shell and at least one inner layout container
-- [ ] `src/App.css` defines CSS custom properties under `:root`
-- [ ] The app layout is styled through class selectors in `src/App.css`, not by adding new inline style objects in `src/App.tsx`
+- [x] `src/App.tsx` imports `./App.css`
+- [x] The top-level JSX in `src/App.tsx` includes class names for an app shell and at least one inner layout container
+- [x] `src/App.css` defines CSS custom properties under `:root`
+- [x] The app layout is styled through class selectors in `src/App.css`, not by adding new inline style objects in `src/App.tsx`
 
 ---
 
