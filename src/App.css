@@ -3,6 +3,7 @@
   --panel-bg: rgba(255, 252, 246, 0.92);
   --ink: #2b241c;
   --accent: #8f3d2e;
+  --selected-overlay: rgba(60, 161, 76, 0.2);
   --radius-lg: 24px;
   --space-md: 1rem;
   --space-xl: 2rem;
@@ -21,6 +22,9 @@
 
 .recipe-card {
   border: 1px solid rgba(43, 36, 28, 0.12);
+  border-radius: 18px;
+  position: relative;
+  overflow: hidden;
   transition:
     transform 160ms ease,
     border-color 160ms ease,
@@ -28,8 +32,18 @@
 }
 
 .recipe-card--selected {
+  border-width: 3px;
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(143, 61, 46, 0.16);
+}
+
+.recipe-card--selected::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--selected-overlay);
+  pointer-events: none;
 }
 
 .recipe-card__image {
@@ -37,4 +51,10 @@
   aspect-ratio: 4 / 3;
   object-fit: cover;
   border-radius: 18px;
+}
+
+.recipe-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 1rem;
 }
