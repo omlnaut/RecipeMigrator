@@ -15,6 +15,7 @@ export function RecipeCard({ recipe, selected, onToggle }: RecipeCardProps) {
 
   return (
     <div onClick={() => onToggle(recipe.title)} className={className}>
+      <span className="recipe-card-title">{recipe.title}</span>
       {src !== null && (
         <img
           className="recipe-card__image"
@@ -25,7 +26,6 @@ export function RecipeCard({ recipe, selected, onToggle }: RecipeCardProps) {
           }}
         />
       )}
-      <span>{recipe.title}</span>
       <span>{recipe.category}</span>
     </div>
   );
