@@ -13,5 +13,6 @@
             ]
         }
     },
-    "runArgs": ["--env-file", ".env"]
+    "runArgs": ["--env-file", ".env"],
+    "postCreateCommand": "deno jupyter --install"
 }
