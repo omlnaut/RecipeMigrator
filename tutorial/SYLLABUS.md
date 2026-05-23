@@ -11,7 +11,8 @@ A local browser tool that:
 1. Loads a MyCookBook XML export and its images
 2. Displays recipes with images, selectable
 3. Makes the current recipe viewer readable, selectable, and visually coherent with CSS
-4. Leaves the typed React data flow intact while improving layout and responsiveness
+4. Uploads selected recipes to Mealie via the API using a paced, observable pipeline
+5. Leaves the typed React data flow intact while improving layout and responsiveness
 
 ## Tech Stack
 
@@ -69,3 +70,11 @@ A local browser tool that:
 | 5.1 | App shell, class names, and CSS tokens                           | 60 min    | done        |
 | 5.2 | Card presentation, modifier classes, and visible selection state | 45 min    | done        |
 | 5.3 | Responsive layout, button states, and narrow-screen behaviour    | 45 min    | in-progress |
+
+### Section 6 — Mealie API Upload Pipeline
+
+| ID  | Title                                                                     | Est. Time | Status |
+| --- | ------------------------------------------------------------------------- | --------- | ------ |
+| 6.1 | Transform layer: map `ParsedRecipe` to schema.org `Recipe`                | 60 min    | todo   |
+| 6.2 | API layer: typed Mealie client with auth, validation, and error mapping   | 60 min    | todo   |
+| 6.3 | Orchestration layer: paced upload queue, progress state, and cancellation | 75 min    | todo   |
