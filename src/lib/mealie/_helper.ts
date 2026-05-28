@@ -9,3 +9,12 @@ export function DefaultMealieClient(): MealieClient {
     },
   );
 }
+
+import type { ParsedRecipeProjection } from "../schemaOrgRecipe.ts";
+
+export const defaultRecipe: ParsedRecipeProjection = {
+  title: "testi asdf",
+  description: "testi mac testface",
+  ingredients: ["first", "second"],
+  instructions: ["do first", "then do second"],
+};
