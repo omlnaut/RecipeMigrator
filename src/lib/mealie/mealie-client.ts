@@ -1,3 +1,7 @@
+import {
+  ToSchemaOrgRecipe,
+  type ParsedRecipeProjection,
+} from "../schemaOrgRecipe.ts";
 import type { RecipeResponse } from "./recipe-types.ts";
 
 export interface AuthInfo {
@@ -13,11 +17,11 @@ export interface ApiInfo {
 const MealieEndpoints = {
   login: "/api/auth/token",
   recipeCrud: "/api/recipes",
+  recipeFromJson: "/api/recipes/create/html-or-json",
 } as const;
 
 export const DEFAULT_HEADERS = {
-  "Content-Type": "application/x-www-form-urlencoded",
-  Accept: "application/json",
+  AcceptJson: { Accept: "application/json; charset=utf-8" },
 } as const;
 
 export class MealieClient {
@@ -50,7 +54,7 @@ export class MealieClient {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        accept: "application/json",
+        ...DEFAULT_HEADERS.AcceptJson,
       },
       body: payload,
     });
@@ -78,8 +82,34 @@ export class MealieClient {
 
   public async AuthorizedDefaultHeader(): Promise<Record<string, string>> {
     return {
-      ...DEFAULT_HEADERS,
+      ...DEFAULT_HEADERS.AcceptJson,
       ...(await this.AuthHeader()),
     };
+  }
+
+  public async UploadJsonRecipe(
+    minimalRecipe: ParsedRecipeProjection,
+  ): Promise<string> {
+    const schema = ToSchemaOrgRecipe(minimalRecipe);
+    const url = this.BuildUrl(MealieEndpoints.recipeFromJson);
+
+    const body = JSON.stringify({
+      includeTags: false,
+      data: JSON.stringify(schema),
+      includeCategories: false,
+      url: null,
+    });
+
+    const headers = {
+      ...(await this.AuthorizedDefaultHeader()),
+      "Content-Type": "application/json; charset=utf-8",
+    };
+    const preResponse = await fetch(url, {
+      method: "POST",
+      headers: headers,
+      body: body,
+    });
+    const slug = await preResponse.json();
+    return slug;
   }
 }
