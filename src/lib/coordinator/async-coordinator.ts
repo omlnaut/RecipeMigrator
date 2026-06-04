@@ -4,20 +4,17 @@ export async function runAsync(
   funcs: AsyncVoidFunction[],
   maxWorkers: number,
 ): Promise<void> {
-  const tasks = funcs.entries();
+  const tasks = funcs[Symbol.iterator]();
 
   async function makeWorker() {
-    for (const [_, task] of tasks) {
+    for (const task of tasks) {
       await task();
     }
   }
 
   const nWorkers = Math.min(maxWorkers, funcs.length);
 
-  const pool: Promise<void>[] = [];
-  for (let i = 0; i < nWorkers; i++) {
-    pool.push(makeWorker());
-  }
+  const pool = Array.from({ length: nWorkers }).map(() => makeWorker());
 
   await Promise.all(pool);
 }
