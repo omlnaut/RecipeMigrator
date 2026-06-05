@@ -1,32 +1,34 @@
-import type { ParsedRecipe } from "../types/recipe.ts";
+import type { Recipe } from "../types/recipe.ts";
 
 type RecipeCardProps = {
-  recipe: ParsedRecipe;
-  selected: boolean;
+  recipe: Recipe;
   onToggle: (title: string) => void;
 };
 
-export function RecipeCard({ recipe, selected, onToggle }: RecipeCardProps) {
-  const filename = recipe.imagepath?.split("/").at(-1);
+export function RecipeCard({ recipe, onToggle }: RecipeCardProps) {
+  const filename = recipe.parsed.imagepath?.split("/").at(-1);
   const src = filename ? "images/" + filename : null;
 
   let className = "recipe-card";
-  if (selected) className += " recipe-card--selected";
+  switch (recipe.status) {
+    case "Selected":
+      className += " recipe-card--selected";
+  }
 
   return (
-    <div onClick={() => onToggle(recipe.title)} className={className}>
-      <span className="recipe-card-title">{recipe.title}</span>
+    <div onClick={() => onToggle(recipe.parsed.title)} className={className}>
+      <span className="recipe-card-title">{recipe.parsed.title}</span>
       {src !== null && (
         <img
           className="recipe-card__image"
           src={src}
-          alt={recipe.title}
+          alt={recipe.parsed.title}
           onError={(e) => {
             (e.currentTarget as HTMLImageElement).style.display = "none";
           }}
         />
       )}
-      <span>{recipe.category}</span>
+      <span>{recipe.parsed.category}</span>
     </div>
   );
 }

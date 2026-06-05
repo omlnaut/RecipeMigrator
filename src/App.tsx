@@ -43,10 +43,21 @@ function App() {
   }
 
   function onToggle(id: string) {
-    setSelectedTitles((prev) =>
-      prev.includes(id) ? prev.filter((x) => x != id) : [...prev, id],
-    );
+    setRecipes((prevRecipes) => {
+      return prevRecipes.map((prevRecipe) => {
+        if (prevRecipe.parsed.title !== id) return prevRecipe;
+
+        const nextStatus =
+          prevRecipe.status === "Selected" ? "None" : "Selected";
+
+        return {
+          ...prevRecipe,
+          status: nextStatus,
+        };
+      });
+    });
   }
+
   useEffect(() => {
     async function load() {
       if (!alreadyLoaded) {
@@ -101,7 +112,6 @@ function App() {
       <div className="recipe-list">
         <RecipeGrid
           parsedRecipes={recipes}
-          selectedTitles={selectedTitles}
           onToggle={onToggle}
           loadingState={loadingState}
         />
