@@ -4,6 +4,7 @@ import { parseRecipes } from "./lib/parseRecipes";
 import type { ParsedRecipe } from "./types/recipe";
 import { RecipeCard } from "./components/RecipeCard";
 import "./App.css";
+import { RecipeGrid } from "./components/RecipeGrid.tsx";
 
 function App() {
   const [loadingState, setLoadingState] = useState<LoadState<string>>({
@@ -48,25 +49,24 @@ function App() {
         <h1 className="app-title">Recipe Migrator</h1>
       </header>
       <div className="toolbar">
-        <button disabled={alreadyLoaded} onClick={() => setAlreadyLoaded(true)}>
+        <button
+          type="button"
+          disabled={alreadyLoaded}
+          onClick={() => setAlreadyLoaded(true)}
+        >
           Load recipes
         </button>
-        <button disabled={selectedTitles.length === 0}>
+        <button type="button" disabled={selectedTitles.length === 0}>
           Export selected ({selectedTitles.length})
         </button>
       </div>
       <div className="recipe-list">
-        {loadingState.status == "ready" &&
-          parsedRecipes.map((r) => {
-            return (
-              <RecipeCard
-                key={r.title}
-                recipe={r}
-                selected={selectedTitles.includes(r.title)}
-                onToggle={onToggle}
-              />
-            );
-          })}
+        <RecipeGrid
+          parsedRecipes={parsedRecipes}
+          selectedTitles={selectedTitles}
+          onToggle={onToggle}
+          loadingState={loadingState}
+        />
       </div>
     </div>
   );
