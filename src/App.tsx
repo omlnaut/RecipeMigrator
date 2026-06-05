@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { type LoadState } from "./types/load-state";
 import { parseRecipes } from "./lib/parseRecipes";
-import type { ParsedRecipe } from "./types/recipe";
+import type { Recipe } from "./types/recipe";
 import "./App.css";
 import { RecipeGrid } from "./components/RecipeGrid.tsx";
 import {
@@ -23,7 +23,7 @@ function App() {
   });
   const [selectedTitles, setSelectedTitles] = useState<string[]>([]);
   const [alreadyLoaded, setAlreadyLoaded] = useState<boolean>(false);
-  const [parsedRecipes, setParsedRecipes] = useState<ParsedRecipe[]>([]);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [exportProgress, setExportProgress] = useState<number>(0);
 
   async function startExport() {
@@ -62,7 +62,9 @@ function App() {
           status: "ready",
           data: src ?? "", //parsed.length.toString(),
         });
-        setParsedRecipes(parsed);
+        setRecipes(
+          parsed.map((parsed) => ({ parsed: parsed, status: "None" })),
+        );
       } catch {
         setLoadingState({ status: "error", message: "error loading recipes" });
       }
@@ -98,7 +100,7 @@ function App() {
       </div>
       <div className="recipe-list">
         <RecipeGrid
-          parsedRecipes={parsedRecipes}
+          parsedRecipes={recipes}
           selectedTitles={selectedTitles}
           onToggle={onToggle}
           loadingState={loadingState}

@@ -1,11 +1,3 @@
-type Recipe = {
-  id: string;
-  name: string;
-  servings: number;
-  imageFileName: string | null;
-  instructions: string;
-};
-
 export type ParsedRecipe = {
   title: string;
   preptime: string;
@@ -20,4 +12,14 @@ export type ParsedRecipe = {
   category: string;
 };
 
-export type RecipeSummary = Pick<Recipe, "id" | "name">;
+export type ExportStatus =
+  | "None"
+  | "Selected"
+  | "InProgress"
+  | "Done"
+  | "Error";
+
+export type Recipe = {
+  parsed: ParsedRecipe;
+  status: ExportStatus;
+};

@@ -1,9 +1,9 @@
 import type { LoadState } from "../types/load-state.ts";
-import type { ParsedRecipe } from "../types/recipe.ts";
+import type { Recipe } from "../types/recipe.ts";
 import { RecipeCard } from "./RecipeCard.tsx";
 
 type RecipeGridProps = {
-  parsedRecipes: ParsedRecipe[];
+  parsedRecipes: Recipe[];
   selectedTitles: string[];
   onToggle: (id: string) => void;
   loadingState: LoadState<string>;
@@ -21,9 +21,9 @@ export function RecipeGrid({
   return parsedRecipes.map((r) => {
     return (
       <RecipeCard
-        key={r.title}
-        recipe={r}
-        selected={selectedTitles.includes(r.title)}
+        key={r.parsed.title}
+        recipe={r.parsed}
+        selected={selectedTitles.includes(r.parsed.title)}
         onToggle={onToggle}
       />
     );

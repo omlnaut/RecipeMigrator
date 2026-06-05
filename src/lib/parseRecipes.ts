@@ -1,4 +1,4 @@
-import type { ParsedRecipe } from "../types/recipe";
+import type { ParsedRecipe } from "../types/recipe.ts";
 
 export function parseRecipes(xmlText: string): ParsedRecipe[] {
   const parser = new DOMParser();
