@@ -2,9 +2,20 @@ import { useEffect, useState } from "react";
 import { type LoadState } from "./types/load-state";
 import { parseRecipes } from "./lib/parseRecipes";
 import type { ParsedRecipe } from "./types/recipe";
-import { RecipeCard } from "./components/RecipeCard";
 import "./App.css";
 import { RecipeGrid } from "./components/RecipeGrid.tsx";
+import {
+  runAsync,
+  type AsyncVoidFunction,
+} from "./lib/coordinator/async-coordinator.ts";
+
+function MakeAsyncFunc(i: number, delayMilliseconds: number) {
+  return async () => {
+    console.log(`start ${i}`);
+    await new Promise((resolve) => setTimeout(resolve, delayMilliseconds));
+    console.log(`end ${i}`);
+  };
+}
 
 function App() {
   const [loadingState, setLoadingState] = useState<LoadState<string>>({
@@ -13,13 +24,29 @@ function App() {
   const [selectedTitles, setSelectedTitles] = useState<string[]>([]);
   const [alreadyLoaded, setAlreadyLoaded] = useState<boolean>(false);
   const [parsedRecipes, setParsedRecipes] = useState<ParsedRecipe[]>([]);
+  const [exportProgress, setExportProgress] = useState<number>(0);
+
+  async function startExport() {
+    const exportFuncs = Array.from(
+      { length: selectedTitles.length },
+      (_, i) => i,
+    )
+      .map((i: number) => MakeAsyncFunc(i, 2000))
+      .map((f: AsyncVoidFunction) => {
+        return async () => {
+          await f();
+          setExportProgress((prevProgress) => prevProgress + 1);
+        };
+      });
+
+    await runAsync(exportFuncs, 2);
+  }
 
   function onToggle(id: string) {
     setSelectedTitles((prev) =>
       prev.includes(id) ? prev.filter((x) => x != id) : [...prev, id],
     );
   }
-
   useEffect(() => {
     async function load() {
       if (!alreadyLoaded) {
@@ -56,9 +83,18 @@ function App() {
         >
           Load recipes
         </button>
-        <button type="button" disabled={selectedTitles.length === 0}>
+        <button
+          type="button"
+          disabled={selectedTitles.length === 0}
+          onClick={startExport}
+        >
           Export selected ({selectedTitles.length})
         </button>
+        {selectedTitles.length > 0 && (
+          <div className="export-bar">
+            {exportProgress}/{selectedTitles.length}
+          </div>
+        )}
       </div>
       <div className="recipe-list">
         <RecipeGrid

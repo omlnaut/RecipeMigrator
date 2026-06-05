@@ -1,4 +1,4 @@
-type AsyncVoidFunction = () => Promise<void>;
+export type AsyncVoidFunction = () => Promise<void>;
 
 export async function runAsync(
   funcs: AsyncVoidFunction[],
