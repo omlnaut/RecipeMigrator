@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
-import { type LoadState } from "./types/load-state";
-import { parseRecipes } from "./lib/parseRecipes";
-import type { ExportStatus, Recipe } from "./types/recipe";
+import { type LoadState } from "./types/load-state.ts";
+import { parseRecipes } from "./lib/parseRecipes.ts";
+import type { ExportStatus, Recipe } from "./types/recipe.ts";
 import "./App.css";
 import { RecipeGrid } from "./components/RecipeGrid.tsx";
-import {
-  runAsync,
-  type AsyncVoidFunction,
-} from "./lib/coordinator/async-coordinator.ts";
+import { runAsync } from "./lib/coordinator/async-coordinator.ts";
 import { ProgressBar } from "./components/ProgressBar.tsx";
 
 function MakeAsyncFunc(i: number, delayMilliseconds: number) {
@@ -18,8 +15,12 @@ function MakeAsyncFunc(i: number, delayMilliseconds: number) {
   };
 }
 
-function WithStatus(recipes: Recipe[], status: ExportStatus): Recipe[] {
-  return recipes.filter((r) => r.status === status);
+function WithStatus(
+  recipes: Recipe[],
+  status: ExportStatus | ExportStatus[],
+): Recipe[] {
+  const targetStatus = Array.isArray(status) ? status : [status];
+  return recipes.filter((r) => targetStatus.includes(r.status));
 }
 
 function App() {
@@ -29,19 +30,21 @@ function App() {
   const [alreadyLoaded, setAlreadyLoaded] = useState<boolean>(false);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [exportProgress, setExportProgress] = useState<number>(0);
+  const [totalExport, setTotalExport] = useState<number>(0);
 
   async function startExport() {
-    const exportFuncs = Array.from(
-      { length: WithStatus(recipes, "Selected").length },
-      (_, i) => i,
-    )
-      .map((i: number) => MakeAsyncFunc(i, 2000))
-      .map((f: AsyncVoidFunction) => {
-        return async () => {
-          await f();
-          setExportProgress((prevProgress) => prevProgress + 1);
-        };
-      });
+    const selectedRecipes = WithStatus(recipes, "Selected");
+    setTotalExport(selectedRecipes.length);
+    const exportFuncs = selectedRecipes.map((r, i) => {
+      const asyncFunc = MakeAsyncFunc(i, 2000);
+
+      return async () => {
+        r.status = "InProgress";
+        await asyncFunc();
+        r.status = i % 2 ? "Done" : "Error";
+        setExportProgress((prevProgress) => prevProgress + 1);
+      };
+    });
 
     await runAsync(exportFuncs, 2);
   }
@@ -93,10 +96,8 @@ function App() {
         <h1 className="app-title">Recipe Migrator</h1>
       </header>
       <div className="toolbar">
-        {recipes.length > 0 && (
-          <ProgressBar
-            p={(100 * exportProgress) / WithStatus(recipes, "Selected").length}
-          />
+        {totalExport > 0 && (
+          <ProgressBar p={(100 * exportProgress) / totalExport} />
         )}
         <button
           type="button"
@@ -117,6 +118,14 @@ function App() {
             {exportProgress}/{WithStatus(recipes, "Selected").length}
           </div>
         )}
+      </div>
+      <div>
+        Errors:
+        <ul style={{ listStylePosition: "inside", padding: 0, margin: 0 }}>
+          {WithStatus(recipes, "Error").map((r) => (
+            <li>{r.parsed.title}</li>
+          ))}
+        </ul>
       </div>
       <div className="recipe-list">
         <RecipeGrid
