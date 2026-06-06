@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { type LoadState } from "./types/load-state";
 import { parseRecipes } from "./lib/parseRecipes";
-import type { Recipe } from "./types/recipe";
+import type { ExportStatus, Recipe } from "./types/recipe";
 import "./App.css";
 import { RecipeGrid } from "./components/RecipeGrid.tsx";
 import {
@@ -18,18 +18,21 @@ function MakeAsyncFunc(i: number, delayMilliseconds: number) {
   };
 }
 
+function WithStatus(recipes: Recipe[], status: ExportStatus): Recipe[] {
+  return recipes.filter((r) => r.status === status);
+}
+
 function App() {
   const [loadingState, setLoadingState] = useState<LoadState<string>>({
     status: "idle",
   });
-  const [selectedTitles, setSelectedTitles] = useState<string[]>([]);
   const [alreadyLoaded, setAlreadyLoaded] = useState<boolean>(false);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [exportProgress, setExportProgress] = useState<number>(0);
 
   async function startExport() {
     const exportFuncs = Array.from(
-      { length: selectedTitles.length },
+      { length: WithStatus(recipes, "Selected").length },
       (_, i) => i,
     )
       .map((i: number) => MakeAsyncFunc(i, 2000))
@@ -90,7 +93,11 @@ function App() {
         <h1 className="app-title">Recipe Migrator</h1>
       </header>
       <div className="toolbar">
-        <ProgressBar p={5} />
+        {recipes.length > 0 && (
+          <ProgressBar
+            p={(100 * exportProgress) / WithStatus(recipes, "Selected").length}
+          />
+        )}
         <button
           type="button"
           disabled={alreadyLoaded}
@@ -100,14 +107,14 @@ function App() {
         </button>
         <button
           type="button"
-          disabled={selectedTitles.length === 0}
+          disabled={WithStatus(recipes, "Selected").length === 0}
           onClick={startExport}
         >
-          Export selected ({selectedTitles.length})
+          Export selected ({WithStatus(recipes, "Selected").length})
         </button>
-        {selectedTitles.length > 0 && (
+        {WithStatus(recipes, "Selected").length > 0 && (
           <div className="export-bar">
-            {exportProgress}/{selectedTitles.length}
+            {exportProgress}/{WithStatus(recipes, "Selected").length}
           </div>
         )}
       </div>
