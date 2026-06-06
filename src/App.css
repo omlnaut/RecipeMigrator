@@ -53,6 +53,76 @@
   pointer-events: none;
 }
 
+.recipe-card--inProgress {
+  border-color: var(--accent); /* Or a specific blue/amber progress color */
+  animation: pulse-glow 2s infinite ease-in-out;
+}
+
+@keyframes pulse-glow {
+  0% {
+    box-shadow: 0 0 0 0px rgba(143, 61, 46, 0.2);
+  }
+  50% {
+    /* Creates a soft, breathing glow effect */
+    box-shadow: 0 0 0 6px rgba(143, 61, 46, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 0 0px rgba(143, 61, 46, 0.2);
+  }
+}
+
+.recipe-card--done {
+  border-color: #10b981; /* Tailwind's emerald-500 */
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.12);
+}
+
+.recipe-card--done::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+
+  /* 1. Bump the opacity up to 8% or 10% so it's visibly green */
+  background-color: rgba(16, 185, 129, 0.25);
+
+  /* 2. OPTIONAL MAGIC: This blends the green beautifully with your panel background */
+  mix-blend-mode: multiply;
+}
+
+.recipe-card--error {
+  border-color: #ef4444; /* Tailwind's red-500 */
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.16);
+
+  /* Trigger a quick shake when the error class is applied */
+  animation: shake-error 400ms ease-in-out;
+}
+
+.recipe-card--error::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(239, 68, 68, 0.22); /* Faint red warning tint */
+  pointer-events: none;
+}
+
+/* A subtle side-to-side shake so the user notices the failure */
+@keyframes shake-error {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  60% {
+    transform: translateX(-4px);
+  }
+  40%,
+  80% {
+    transform: translateX(4px);
+  }
+}
+
 .recipe-card__image {
   width: 100%;
   aspect-ratio: 4 / 3;

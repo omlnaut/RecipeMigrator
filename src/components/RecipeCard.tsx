@@ -13,6 +13,16 @@ export function RecipeCard({ recipe, onToggle }: RecipeCardProps) {
   switch (recipe.status) {
     case "Selected":
       className += " recipe-card--selected";
+      break;
+    case "InProgress":
+      className += " recipe-card--inProgress";
+      break;
+    case "Done":
+      className += " recipe-card--done";
+      break;
+    case "Error":
+      className += " recipe-card--error";
+      break;
   }
 
   return (
