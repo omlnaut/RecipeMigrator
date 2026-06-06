@@ -8,6 +8,7 @@ import {
   runAsync,
   type AsyncVoidFunction,
 } from "./lib/coordinator/async-coordinator.ts";
+import { ProgressBar } from "./components/ProgressBar.tsx";
 
 function MakeAsyncFunc(i: number, delayMilliseconds: number) {
   return async () => {
@@ -89,6 +90,7 @@ function App() {
         <h1 className="app-title">Recipe Migrator</h1>
       </header>
       <div className="toolbar">
+        <ProgressBar p={5} />
         <button
           type="button"
           disabled={alreadyLoaded}
