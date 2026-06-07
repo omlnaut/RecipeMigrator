@@ -5,7 +5,7 @@ import type { ExportStatus, Recipe } from "./types/recipe.ts";
 import "./App.css";
 import { RecipeGrid } from "./components/RecipeGrid.tsx";
 import { runAsync } from "./lib/coordinator/async-coordinator.ts";
-import { ProgressBar } from "./components/ProgressBar.tsx";
+import { ProgressBar } from "@components/progressbar";
 
 function MakeAsyncFunc(i: number, delayMilliseconds: number) {
   return async () => {

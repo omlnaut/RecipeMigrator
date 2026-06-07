@@ -10,5 +10,7 @@
         "git -C /workspaces/RecipeMigrator": true
     },
     "markdown.preview.fontSize": 14,
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "deno.enable": false,
+    "deno.lint": false
 }
