@@ -9,8 +9,19 @@
         "printf": true,
         "git -C /workspaces/RecipeMigrator": true
     },
+    "css.validate": true,
     "markdown.preview.fontSize": 14,
     "editor.formatOnSave": true,
     "deno.enable": false,
-    "deno.lint": false
+    "deno.lint": false,
+    "[typescript]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "always"
+        }
+    },
+    "[typescriptreact]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "always"
+        }
+    }
 }
