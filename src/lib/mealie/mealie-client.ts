@@ -14,6 +14,11 @@ export interface ApiInfo {
   port: number;
 }
 
+export interface ImageInfo {
+  blob: Blob;
+  filename: string;
+}
+
 const MealieEndpoints = {
   login: "/api/auth/token",
   recipeCrud: "/api/recipes",
@@ -111,5 +116,28 @@ export class MealieClient {
     });
     const slug = await preResponse.json();
     return slug;
+  }
+
+  public async UpdateImage(slug: string, { blob, filename }: ImageInfo) {
+    const urlPath = `/api/recipes/${slug}/image`;
+    const url = this.BuildUrl(urlPath);
+
+    const extension = filename.split(".").pop() ?? "";
+    const formData = new FormData();
+    formData.append("image", blob, filename);
+    formData.append("extension", extension);
+
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: {
+        ...(await this.AuthorizedDefaultHeader()),
+      },
+      body: formData,
+    });
+    if (!response.ok) {
+      throw new Error(
+        `Failed to update image. Status: ${response.status} ${response.statusText}`,
+      );
+    }
   }
 }
