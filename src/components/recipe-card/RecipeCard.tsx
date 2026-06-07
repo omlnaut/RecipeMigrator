@@ -1,4 +1,4 @@
-import type { Recipe } from "../types/recipe.ts";
+import type { Recipe } from "../../types/recipe.ts";
 
 type RecipeCardProps = {
   recipe: Recipe;

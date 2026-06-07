@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { type LoadState } from "./types/load-state.ts";
-import { parseRecipes } from "./lib/parseRecipes.ts";
-import type { ExportStatus, Recipe } from "./types/recipe.ts";
-import "./App.css";
-import { RecipeGrid } from "./components/RecipeGrid.tsx";
-import { runAsync } from "./lib/coordinator/async-coordinator.ts";
 import { ProgressBar } from "@components/progressbar";
+import { RecipeGrid } from "@components/RecipeGrid.tsx";
+import { useEffect, useState } from "react";
+import "./App.css";
+import { runAsync } from "./lib/coordinator/async-coordinator.ts";
+import { parseRecipes } from "./lib/parseRecipes.ts";
+import { type LoadState } from "./types/load-state.ts";
+import type { ExportStatus, Recipe } from "./types/recipe.ts";
 
 function MakeAsyncFunc(i: number, delayMilliseconds: number) {
   return async () => {

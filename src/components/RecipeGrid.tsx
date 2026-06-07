@@ -1,6 +1,6 @@
 import type { LoadState } from "../types/load-state.ts";
 import type { Recipe } from "../types/recipe.ts";
-import { RecipeCard } from "./RecipeCard.tsx";
+import { RecipeCard } from "./recipe-card/RecipeCard.tsx";
 
 type RecipeGridProps = {
   parsedRecipes: Recipe[];

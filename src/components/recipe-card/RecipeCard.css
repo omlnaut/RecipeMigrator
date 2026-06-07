@@ -1,0 +1,127 @@
+.recipe-card {
+  border: 1px solid rgba(43, 36, 28, 0.12);
+  border-radius: 18px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: var(--panel-bg);
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.recipe-card--selected {
+  border-width: 3px;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(143, 61, 46, 0.16);
+}
+
+.recipe-card--selected::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--selected-overlay);
+  pointer-events: none;
+}
+
+.recipe-card--inProgress {
+  border-color: var(--accent); /* Or a specific blue/amber progress color */
+  animation: pulse-glow 2s infinite ease-in-out;
+}
+
+@keyframes pulse-glow {
+  0% {
+    box-shadow: 0 0 0 0px rgba(143, 61, 46, 0.2);
+  }
+  50% {
+    /* Creates a soft, breathing glow effect */
+    box-shadow: 0 0 0 6px rgba(143, 61, 46, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 0 0px rgba(143, 61, 46, 0.2);
+  }
+}
+
+.recipe-card--done {
+  border-color: #10b981; /* Tailwind's emerald-500 */
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.12);
+}
+
+.recipe-card--done::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+
+  /* 1. Bump the opacity up to 8% or 10% so it's visibly green */
+  background-color: rgba(16, 185, 129, 0.25);
+
+  /* 2. OPTIONAL MAGIC: This blends the green beautifully with your panel background */
+  mix-blend-mode: multiply;
+}
+
+.recipe-card--error {
+  border-color: #ef4444; /* Tailwind's red-500 */
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.16);
+
+  /* Trigger a quick shake when the error class is applied */
+  animation: shake-error 400ms ease-in-out;
+}
+
+.recipe-card--error::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(239, 68, 68, 0.22); /* Faint red warning tint */
+  pointer-events: none;
+}
+
+/* A subtle side-to-side shake so the user notices the failure */
+@keyframes shake-error {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  60% {
+    transform: translateX(-4px);
+  }
+  40%,
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+.recipe-card__image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+.recipe-card-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  padding: 0.5rem 0.65rem;
+  border-radius: 10px;
+  background: var(--title-bg);
+  text-wrap: balance;
+}
+
+.recipe-card > span:last-child {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: rgba(43, 36, 28, 0.72);
+}
