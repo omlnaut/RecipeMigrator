@@ -92,7 +92,7 @@ export class MealieClient {
     };
   }
 
-  public async UploadJsonRecipe(
+  public async uploadJsonRecipe(
     minimalRecipe: ParsedRecipeProjection,
   ): Promise<string> {
     const schema = ToSchemaOrgRecipe(minimalRecipe);
@@ -118,7 +118,7 @@ export class MealieClient {
     return slug;
   }
 
-  public async UpdateImage(slug: string, { blob, filename }: ImageInfo) {
+  public async updateImage(slug: string, { blob, filename }: ImageInfo) {
     const urlPath = `/api/recipes/${slug}/image`;
     const url = this.BuildUrl(urlPath);
 
