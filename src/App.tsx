@@ -14,14 +14,6 @@ import { parseRecipes } from "./lib/parseRecipes.ts";
 import { type LoadState } from "./types/load-state.ts";
 import type { ExportStatus, Recipe } from "./types/recipe.ts";
 
-function MakeAsyncFunc(i: number, delayMilliseconds: number) {
-  return async () => {
-    console.log(`start ${i}`);
-    await new Promise((resolve) => setTimeout(resolve, delayMilliseconds));
-    console.log(`end ${i}`);
-  };
-}
-
 function WithStatus(
   recipes: Recipe[],
   status: ExportStatus | ExportStatus[],
@@ -65,15 +57,13 @@ function App() {
     console.log(`${await client.GetRecipes()}`);
 
     const exportPromises = selectedRecipes.map(async (r, i) => {
-      const asyncFunc = MakeAsyncFunc(i, 2000);
-
       const imageInfo = await loadRecipeImage(r.parsed.imagepath);
       console.log(`blob size: ${imageInfo?.blob.size}`);
 
       return async () => {
         r.status = "InProgress";
-        await uploadRecipe(r.parsed, client, imageInfo);
-        r.status = i % 2 ? "Done" : "Error";
+        const newStatus = await uploadRecipe(r.parsed, client, imageInfo);
+        r.status = newStatus.result == "success" ? "Done" : "Error";
         setExportProgress((prevProgress) => prevProgress + 1);
       };
     });
