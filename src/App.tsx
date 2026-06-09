@@ -3,6 +3,7 @@ import { RecipeGrid } from "@components/RecipeGrid.tsx";
 import { useEffect, useState } from "react";
 import "./App.css";
 import { runAsync } from "./lib/coordinator/async-coordinator.ts";
+import { loadRecipeImage } from "./lib/load-images.ts";
 import { parseRecipes } from "./lib/parseRecipes.ts";
 import { type LoadState } from "./types/load-state.ts";
 import type { ExportStatus, Recipe } from "./types/recipe.ts";
@@ -35,8 +36,11 @@ function App() {
   async function startExport() {
     const selectedRecipes = WithStatus(recipes, "Selected");
     setTotalExport(selectedRecipes.length);
-    const exportFuncs = selectedRecipes.map((r, i) => {
+    const exportPromises = selectedRecipes.map(async (r, i) => {
       const asyncFunc = MakeAsyncFunc(i, 2000);
+
+      const imageInfo = await loadRecipeImage(r.parsed.imagepath);
+      console.log(`blob size: ${imageInfo?.blob.size}`);
 
       return async () => {
         r.status = "InProgress";
@@ -45,6 +49,7 @@ function App() {
         setExportProgress((prevProgress) => prevProgress + 1);
       };
     });
+    const exportFuncs = await Promise.all(exportPromises);
 
     await runAsync(exportFuncs, 2);
   }
