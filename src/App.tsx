@@ -4,6 +4,12 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { runAsync } from "./lib/coordinator/async-coordinator.ts";
 import { loadRecipeImage } from "./lib/load-images.ts";
+import {
+  MealieClient,
+  type ApiInfo,
+  type AuthInfo,
+} from "./lib/mealie/mealie-client.ts";
+import { uploadRecipe } from "./lib/mealie/recipe-upload-service.ts";
 import { parseRecipes } from "./lib/parseRecipes.ts";
 import { type LoadState } from "./types/load-state.ts";
 import type { ExportStatus, Recipe } from "./types/recipe.ts";
@@ -36,6 +42,28 @@ function App() {
   async function startExport() {
     const selectedRecipes = WithStatus(recipes, "Selected");
     setTotalExport(selectedRecipes.length);
+
+    const authInfo: AuthInfo = {
+      username: import.meta.env.VITE_MEALIE_USERNAME,
+      password: import.meta.env.VITE_MEALIE_PASSWORD,
+    };
+
+    const urlString = window.location.origin;
+
+    const url = new URL(urlString);
+
+    const baseUrl = `${url.protocol}//${url.hostname}`;
+    const port = Number(url.port);
+
+    const apiInfo: ApiInfo = {
+      baseUrl: baseUrl,
+      port: port,
+    };
+
+    const client = new MealieClient(apiInfo, authInfo);
+
+    console.log(`${await client.GetRecipes()}`);
+
     const exportPromises = selectedRecipes.map(async (r, i) => {
       const asyncFunc = MakeAsyncFunc(i, 2000);
 
@@ -44,7 +72,7 @@ function App() {
 
       return async () => {
         r.status = "InProgress";
-        await asyncFunc();
+        await uploadRecipe(r.parsed, client, imageInfo);
         r.status = i % 2 ? "Done" : "Error";
         setExportProgress((prevProgress) => prevProgress + 1);
       };
